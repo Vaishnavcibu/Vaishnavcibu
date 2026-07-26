@@ -13,6 +13,20 @@
 <img src="https://komarev.com/ghpvc/?username=Vaishnavcibu&color=E10600&style=for-the-badge&label=VISITS" alt="" />
 </div>
 
+```console
+┌─ SYSTEM ────────────────────────────────────────────────────────┐
+│                                                                 │
+│   USER        vaishnav_cibu                                     │
+│   ROLE        founder · full-stack + ai · product               │
+│   COMPANY     corezentric technologies llp        [ACY-6591]    │
+│   PRODUCT     CORE  →  hoardgrid · hoardbook                    │
+│   STACK       flutter · node · react · mongo · openai           │
+│   LOCATION    kerala, in                            [UTC+5:30]  │
+│   STATUS      ● building — open to work                         │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## `01://ABOUT`
@@ -54,6 +68,30 @@ Great software isn't defined by elegant code alone. It's measured by the value i
 | 05 | **OCR Bill Extractor** | Offline OCR that turns printed bills into structured data — nothing leaves the device | Flutter · ML Kit · Tesseract |
 | 06 | **NFC Smart Cycle Booking** | NFC authentication for secure campus bicycle booking — tap to unlock, tap to return | Flutter · NFC · Firebase |
 
+<details>
+<summary><b>&nbsp;CASE STUDY — HoardGrid&nbsp;</b></summary>
+<br />
+
+**Problem.** Billboard operators run a high-value asset business on WhatsApp and spreadsheets. Double bookings, expired contracts and unbilled campaigns leak revenue every month, and nobody can answer "what is occupied right now?"
+
+**Approach.** Model the hoarding as inventory with a time dimension. One record per site, campaigns as date-bounded reservations against it, contracts and invoices generated from the same source of truth so billing can't drift from occupancy.
+
+**Result.** A single dashboard where an operator sees live occupancy, upcoming vacancies and outstanding invoices — the operator half of the CORE platform.
+
+</details>
+
+<details>
+<summary><b>&nbsp;CASE STUDY — HoardBook&nbsp;</b></summary>
+<br />
+
+**Problem.** Buying outdoor advertising means calling brokers, waiting on photos, and taking price on trust. There is no way to compare two sites side by side.
+
+**Approach.** Put verified inventory from HoardGrid operators into a public marketplace — discovery, comparison, booking and payment in one flow, with the vendor dashboard writing back to the same inventory.
+
+**Result.** The demand half of CORE: advertisers self-serve, operators fill vacancies without a broker in the middle.
+
+</details>
+
 ---
 
 ## `04://STACK`
@@ -77,10 +115,24 @@ Great software isn't defined by elegant code alone. It's measured by the value i
 
 ---
 
-## `05://NUMBERS`
+## `05://FOCUS`
+
+```text
+PRODUCT ENGINEERING   ████████████████░░░░░░░░   60%
+AI INTEGRATION        ██████░░░░░░░░░░░░░░░░░░   25%
+DESIGN / UX           ████░░░░░░░░░░░░░░░░░░░░   15%
+
+NOW          CORE platform — multi-tenant billing + contracts
+NEXT         Hoardbook marketplace, public beta
+LEARNING     Distributed systems · vector search · Docker in prod
+```
+
+---
+
+## `06://NUMBERS`
 
 <div align="center">
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=Vaishnavcibu&show_icons=true&hide_border=true&bg_color=070707&title_color=E10600&icon_color=E10600&text_color=F2EFE9&ring_color=E10600" alt="" />
+<img height="165" src="https://github-readme-stats.vercel.app/api?username=Vaishnavcibu&show_icons=true&hide_border=true&include_all_commits=true&bg_color=070707&title_color=E10600&icon_color=E10600&text_color=F2EFE9&ring_color=E10600" alt="" />
 <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Vaishnavcibu&layout=compact&hide_border=true&langs_count=8&bg_color=070707&title_color=E10600&text_color=F2EFE9" alt="" />
 </div>
 
@@ -98,15 +150,25 @@ Great software isn't defined by elegant code alone. It's measured by the value i
 
 ---
 
-## `06://PROCESS`
+## `07://CONTRIBUTIONS`
 
-`01 DISCOVERY` → `02 PRODUCT DESIGN` → `03 DEVELOPMENT` → `04 DEPLOYMENT` → `05 CONTINUOUS IMPROVEMENT`
+<div align="center">
+<img src="https://raw.githubusercontent.com/Vaishnavcibu/Vaishnavcibu/output/snake.svg" alt="" />
+</div>
+
+---
+
+## `08://PROCESS`
+
+```text
+01 DISCOVERY  →  02 PRODUCT DESIGN  →  03 DEVELOPMENT  →  04 DEPLOYMENT  →  05 IMPROVEMENT
+```
 
 Discovery before design, design before code, and improvement that never really stops.
 
 ---
 
-## `07://CONTACT`
+## `09://CONTACT`
 
 <div align="center">
 <b>Let's build something extraordinary.</b>
