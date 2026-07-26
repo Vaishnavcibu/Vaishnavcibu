@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vaishnav Cibu — Software Engineer / AI Product Builder / Startup Founder</title>
+<meta name="description" content="Vaishnav Cibu builds AI-powered applications, enterprise software, SaaS platforms and scalable web systems that create measurable business impact.">
+<meta name="theme-color" content="#070707">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vaishnav Cibu — Software Engineer / AI Product Builder / Startup Founder">
+<meta property="og:description" content="I don't just build software—I build products that solve real business problems.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --void:#070707;
+  --carbon:#0d0d0d;
+  --panel:#121212;
+  --red:#e10600;
+  --ember:#ff3b2f;
+  --red-dim:rgba(225,6,0,.28);
+  --bone:#f2efe9;
+  --steel:rgba(242,239,233,.44);
+  --hair:rgba(225,6,0,.22);
+  --hair-soft:rgba(242,239,233,.10);
+
+  --nav:56px;
+  --gut:26px;
+  --maxw:1760px;
+
+  --d:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --m:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+
+  --e:cubic-bezier(.16,1,.3,1);
+}
+@media (max-width:900px){ :root{ --gut:14px; --nav:48px; } }
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body,h1,h2,h3,h4,p,figure,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+img{display:block;max-width:100%}
+button,input,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+
+body{
+  background:var(--void);
+  color:var(--bone);
+  font-family:var(--m);
+  font-weight:300;
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.locked{overflow:hidden}
+
+::selection{background:var(--red);color:#fff}
+
+/* focus */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--ember);outline-offset:3px;
+}
+
+/* ============================================================
+   BACKDROP: hairline column grid + grain
+   ============================================================ */
+.grid-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  display:grid;grid-template-columns:repeat(5,1fr);
+  padding:0 var(--gut);
+}
+.grid-bg span{border-left:1px solid rgba(242,239,233,.045)}
+.grid-bg span:last-child{border-right:1px solid rgba(242,239,233,.045)}
+@media (max-width:900px){ .grid-bg{grid-template-columns:repeat(2,1fr)} }
+
+.grain{
+  position:fixed;inset:-100%;z-index:2;pointer-events:none;opacity:.16;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 6s steps(6) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-4%)}
+  60%{transform:translate(-3%,-2%)}80%{transform:translate(4%,2%)}100%{transform:translate(0,0)}
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.shell{position:relative;z-index:1}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
+.rule{height:1px;background:var(--hair);width:100%}
+.rule--soft{background:var(--hair-soft)}
+
+.band{position:relative;padding:clamp(64px,9vw,140px) 0}
+.band--tight{padding:clamp(40px,5vw,72px) 0}
+
+/* rotated section index in the gutter */
+.index{
+  position:absolute;top:24px;right:2px;
+  font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.16em;
+  color:var(--red);writing-mode:vertical-rl;text-orientation:mixed;
+  opacity:.85;
+}
+@media (max-width:900px){ .index{display:none} }
+
+.eyebrow{
+  font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--steel);
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--red)}
+
+h1,h2,h3,h4,.dsp{font-family:var(--d);font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:-.02em}
+
+.h-xl{font-size:clamp(2.6rem,7vw,6.2rem)}
+.h-lg{font-size:clamp(2rem,4.6vw,4rem)}
+.h-md{font-size:clamp(1.25rem,2vw,1.9rem);letter-spacing:-.01em}
+.h-sm{font-size:clamp(1rem,1.3vw,1.18rem);font-weight:700;letter-spacing:.01em}
+
+.lede{font-size:clamp(15px,1.25vw,18px);line-height:1.55;color:rgba(242,239,233,.82);max-width:62ch}
+.muted{color:var(--steel)}
+.tiny{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+
+.red{color:var(--red)}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  --bg:var(--red);--fg:#fff;
+  position:relative;display:inline-flex;align-items:center;gap:14px;
+  padding:15px 22px;border:1px solid var(--red);background:transparent;color:var(--fg);
+  font-family:var(--m);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  cursor:pointer;overflow:hidden;isolation:isolate;
+}
+.btn::before{
+  content:"";position:absolute;inset:0;background:var(--bg);z-index:-1;
+  transform:translateY(0);transition:transform .5s var(--e);
+}
+.btn:hover::before{transform:translateY(-101%)}
+.btn:hover{color:var(--red)}
+.btn .arw{transition:transform .45s var(--e)}
+.btn:hover .arw{transform:translateX(5px)}
+
+.btn--ghost{--bg:var(--bone);color:var(--bone);border-color:rgba(242,239,233,.34)}
+.btn--ghost::before{transform:translateY(101%)}
+.btn--ghost:hover::before{transform:translateY(0)}
+.btn--ghost:hover{color:var(--void);border-color:var(--bone)}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.progress{position:fixed;top:0;left:0;height:2px;background:var(--red);width:0;z-index:60}
+
+.nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav);z-index:50;
+  background:rgba(7,7,7,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--hair);
+}
+.nav__in{max-width:var(--maxw);margin:0 auto;height:100%;padding:0 var(--gut);display:flex;align-items:center}
+.brand{display:flex;align-items:center;gap:12px;padding-right:20px;height:100%}
+.brand__mark{
+  width:26px;height:26px;background:var(--red);color:#fff;font-family:var(--d);font-weight:900;
+  font-size:12px;display:grid;place-items:center;letter-spacing:0;
+}
+.brand__txt{font-family:var(--d);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+.nav__status{
+  margin-left:auto;display:flex;align-items:center;gap:9px;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);
+  padding-right:20px;
+}
+.dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.nav__cta{
+  height:100%;display:flex;align-items:center;padding:0 20px;border-left:1px solid var(--hair);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+  transition:background .3s var(--e),color .3s var(--e);
+}
+.nav__cta:hover{background:var(--red);color:#fff}
+.burger{
+  height:100%;display:flex;align-items:center;gap:10px;padding:0 0 0 20px;border-left:1px solid var(--hair);
+  background:none;border-top:0;border-right:0;border-bottom:0;cursor:pointer;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+}
+.burger__ico{position:relative;width:16px;height:11px}
+.burger__ico i{position:absolute;left:0;height:1px;width:100%;background:var(--bone);transition:transform .4s var(--e),opacity .3s}
+.burger__ico i:nth-child(1){top:0}
+.burger__ico i:nth-child(2){top:5px}
+.burger__ico i:nth-child(3){top:10px}
+body.menu-open .burger__ico i:nth-child(1){transform:translateY(5px) rotate(45deg)}
+body.menu-open .burger__ico i:nth-child(2){opacity:0}
+body.menu-open .burger__ico i:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+@media (max-width:700px){ .nav__status{display:none} .nav__cta{display:none} }
+
+/* overlay menu */
+.menu{
+  position:fixed;inset:0;z-index:45;background:var(--void);
+  clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--e);
+  display:flex;flex-direction:column;padding-top:var(--nav);
+}
+body.menu-open .menu{clip-path:inset(0 0 0 0)}
+.menu__in{max-width:var(--maxw);margin:0 auto;width:100%;padding:0 var(--gut);flex:1;display:flex;flex-direction:column;justify-content:center}
+.menu a{
+  display:flex;align-items:baseline;gap:20px;padding:clamp(10px,1.6vw,20px) 0;
+  border-top:1px solid var(--hair-soft);font-family:var(--d);font-weight:800;text-transform:uppercase;
+  font-size:clamp(1.8rem,6vw,4.5rem);line-height:1;letter-spacing:-.02em;
+  transition:color .35s var(--e),padding-left .45s var(--e);
+}
+.menu a:last-child{border-bottom:1px solid var(--hair-soft)}
+.menu a span{font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.2em;color:var(--red);}
+.menu a:hover{color:var(--red);padding-left:16px}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{padding-top:calc(var(--nav) + 8px);position:relative}
+.hero__glow{
+  position:absolute;top:-10%;left:50%;transform:translateX(-50%);
+  width:min(1100px,120vw);height:600px;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(225,6,0,.22),transparent 62%);
+  filter:blur(30px);
+}
+.hero__name{
+  font-family:var(--d);font-weight:900;text-transform:uppercase;
+  font-size:clamp(2.5rem,8.6vw,8rem);line-height:.9;letter-spacing:-.04em;
+  padding:clamp(18px,3vw,42px) 0 clamp(10px,1.4vw,20px);
+  position:relative;
+}
+.hero__name .wd{display:inline-block;white-space:nowrap}
+.hero__name .ch{display:inline-block;transform:translateY(105%);opacity:0}
+.hero__name .sp{display:inline-block;width:.28em}
+.is-loaded .hero__name .ch{
+  transform:translateY(0);opacity:1;
+  transition:transform .95s var(--e),opacity .7s ease;
+  transition-delay:calc(var(--i) * 26ms + 180ms);
+}
+.caret{display:inline-block;width:.14em;height:.72em;background:var(--red);margin-left:.08em;vertical-align:baseline;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+.hero__role{
+  display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--steel);
+  padding:16px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+}
+.hero__role b{color:var(--bone);font-weight:500}
+.hero__role i{color:var(--red);font-style:normal}
+
+.hero__grid{display:grid;grid-template-columns:1.15fr 1fr;gap:0}
+.hero__grid > *{padding:clamp(24px,3vw,44px) 0}
+.hero__lead{padding-right:clamp(20px,4vw,80px);border-right:1px solid var(--hair)}
+.hero__lead p{margin-bottom:18px}
+.hero__lead p:last-child{margin-bottom:0}
+.hero__claim{
+  font-family:var(--d);font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.05rem,1.7vw,1.5rem);line-height:1.15;letter-spacing:-.01em;color:var(--bone);
+  border-left:2px solid var(--red);padding-left:16px;
+}
+.hero__side{padding-left:clamp(20px,4vw,60px);display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.hero__acts{display:flex;flex-wrap:wrap;gap:12px}
+@media (max-width:900px){
+  .hero__grid{grid-template-columns:1fr}
+  .hero__lead{border-right:0;border-bottom:1px solid var(--hair);padding-right:0}
+  .hero__side{padding-left:0}
+}
+
+.hero__meta{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair)}
+.hero__meta div{background:var(--void);padding:14px 16px}
+.hero__meta dt{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);margin-bottom:6px}
+.hero__meta dd{margin:0;font-family:var(--d);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.01em}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.ticker{overflow:hidden;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:13px 0;background:var(--red)}
+.ticker--dark{background:transparent}
+.ticker__track{display:flex;width:max-content;animation:slide 34s linear infinite}
+.ticker--rev .ticker__track{animation-direction:reverse}
+.ticker__track span{
+  font-family:var(--d);font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.06em;
+  padding:0 22px;display:inline-flex;align-items:center;gap:22px;white-space:nowrap;
+}
+.ticker--dark .ticker__track span{color:var(--steel);font-weight:600}
+.ticker__track span::after{content:"";width:5px;height:5px;background:currentColor;transform:rotate(45deg)}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker:hover .ticker__track{animation-play-state:paused}
+
+/* ============================================================
+   SECTION HEAD
+   ============================================================ */
+.shead{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,60px);align-items:end;padding-bottom:clamp(28px,4vw,56px)}
+.shead__t{margin-top:18px}
+.shead p{align-self:end}
+@media (max-width:900px){ .shead{grid-template-columns:1fr;gap:20px} }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--hair)}
+.about__col{padding:clamp(24px,3vw,44px) clamp(20px,3vw,48px) clamp(24px,3vw,44px) 0}
+.about__col + .about__col{border-left:1px solid var(--hair);padding-left:clamp(20px,3vw,48px);padding-right:0}
+.about__col p + p{margin-top:16px}
+@media (max-width:900px){
+  .about{grid-template-columns:1fr}
+  .about__col{padding-right:0}
+  .about__col + .about__col{border-left:0;border-top:1px solid var(--hair);padding-left:0}
+}
+
+/* ============================================================
+   CAPABILITY CARDS
+   ============================================================ */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair)}
+@media (max-width:1000px){ .cards{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:640px){ .cards{grid-template-columns:1fr} }
+
+.card{
+  background:var(--void);padding:26px 24px 30px;position:relative;overflow:hidden;
+  min-height:230px;display:flex;flex-direction:column;
+  transition:background .45s var(--e);
+}
+.card::after{
+  content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:left;transition:transform .55s var(--e);
+}
+.card:hover{background:var(--carbon)}
+.card:hover::after{transform:scaleX(1)}
+.card__no{font-size:10px;letter-spacing:.18em;color:var(--red);font-weight:500;margin-bottom:auto}
+.card__t{margin:24px 0 10px;font-size:clamp(1.05rem,1.5vw,1.32rem)}
+.card__d{font-size:13.5px;line-height:1.55;color:var(--steel)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chip{
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+  padding:5px 9px;border:1px solid var(--hair-soft);color:rgba(242,239,233,.72);
+  transition:border-color .3s,color .3s;
+}
+.card:hover .chip{border-color:var(--red-dim);color:var(--bone)}
+
+/* ============================================================
+   PROJECT DECK (sticky spec sheets)
+   ============================================================ */
+.panel{background:var(--carbon);border:1px solid var(--hair);overflow:hidden}
+.deck{position:relative;padding-bottom:20px}
+.spec{
+  position:sticky;top:calc(var(--nav) + 14px);
+  background:var(--carbon);border:1px solid var(--hair);
+  margin-bottom:22px;overflow:hidden;
+}
+.spec__bar{
+  display:flex;align-items:stretch;border-bottom:1px solid var(--hair);
+}
+.spec__no{
+  background:var(--red);color:#fff;font-family:var(--d);font-weight:900;font-size:13px;
+  display:grid;place-items:center;width:54px;flex:none;
+}
+.spec__ttl{flex:1;display:flex;align-items:center;padding:16px 20px;gap:16px;flex-wrap:wrap}
+.spec__ttl h3{font-size:clamp(1.05rem,2vw,1.75rem)}
+.spec__kind{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:500}
+.spec__body{display:grid;grid-template-columns:1.1fr 1fr;gap:0}
+.spec__l{padding:24px 24px 28px;border-right:1px solid var(--hair)}
+.spec__r{padding:24px 24px 28px;display:flex;flex-direction:column;gap:20px}
+.spec__d{font-size:14px;line-height:1.6;color:rgba(242,239,233,.8);max-width:56ch}
+.spec__lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel);margin-bottom:12px;display:block}
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;margin-top:22px}
+.feat li{font-size:12.5px;color:rgba(242,239,233,.8);display:flex;gap:9px;align-items:baseline}
+.feat li::before{content:"";width:5px;height:5px;background:var(--red);flex:none;transform:translateY(-2px)}
+@media (max-width:860px){
+  .spec__body{grid-template-columns:1fr}
+  .spec__l{border-right:0;border-bottom:1px solid var(--hair)}
+  .feat{grid-template-columns:1fr}
+}
+/* schematic block */
+.schem{height:140px;border:1px solid var(--hair);position:relative;overflow:hidden;background:
+  repeating-linear-gradient(90deg,transparent 0 23px,rgba(225,6,0,.10) 23px 24px),
+  repeating-linear-gradient(0deg,transparent 0 23px,rgba(225,6,0,.10) 23px 24px);}
+.schem::after{
+  content:attr(data-tag);position:absolute;right:10px;bottom:8px;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);
+}
+.schem i{position:absolute;background:var(--red);opacity:.85}
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skills{border-top:1px solid var(--hair)}
+.skillrow{
+  display:grid;grid-template-columns:220px 1fr;gap:clamp(16px,3vw,50px);
+  padding:22px 0;border-bottom:1px solid var(--hair-soft);align-items:start;
+}
+.skillrow h4{font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--bone)}
+.skillrow h4 em{font-style:normal;color:var(--red);font-family:var(--m);font-size:10px;font-weight:500;letter-spacing:.16em;display:block;margin-bottom:6px}
+@media (max-width:760px){ .skillrow{grid-template-columns:1fr;gap:12px} }
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+.steps{border-top:1px solid var(--hair)}
+.step{
+  display:grid;grid-template-columns:90px 1fr 1fr;gap:clamp(14px,3vw,44px);
+  padding:clamp(20px,2.4vw,32px) 0;border-bottom:1px solid var(--hair-soft);
+  position:relative;transition:padding-left .5s var(--e);
+}
+.step::before{
+  content:"";position:absolute;left:0;top:0;height:100%;width:0;background:rgba(225,6,0,.07);
+  transition:width .6s var(--e);z-index:-1;
+}
+.step:hover{padding-left:14px}
+.step:hover::before{width:100%}
+.step__n{font-family:var(--d);font-weight:900;font-size:clamp(1.5rem,3vw,2.4rem);color:var(--red);line-height:1}
+.step h4{font-size:clamp(1rem,1.6vw,1.35rem)}
+.step p{font-size:13.5px;color:var(--steel);line-height:1.55;max-width:48ch}
+@media (max-width:860px){ .step{grid-template-columns:56px 1fr;gap:16px} .step p{grid-column:2} }
+
+/* ============================================================
+   WHY / VALUE
+   ============================================================ */
+.why{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair)}
+@media (max-width:1100px){ .why{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:560px){ .why{grid-template-columns:1fr} }
+.why__c{background:var(--void);padding:24px 20px 26px;min-height:180px;display:flex;flex-direction:column;gap:12px;transition:background .4s var(--e)}
+.why__c:hover{background:var(--red)}
+.why__c:hover .why__d,.why__c:hover .why__k{color:rgba(255,255,255,.9)}
+.why__k{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:500;transition:color .4s}
+.why__t{font-size:clamp(1rem,1.35vw,1.2rem);margin-top:auto}
+.why__d{font-size:13px;color:var(--steel);line-height:1.5;transition:color .4s}
+
+/* ============================================================
+   NUMBERS
+   ============================================================ */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair)}
+@media (max-width:760px){ .stats{grid-template-columns:1fr} }
+.stat{background:var(--void);padding:clamp(26px,3vw,44px) 24px;display:flex;flex-direction:column;gap:8px}
+.stat__v{font-family:var(--d);font-weight:900;font-size:clamp(2.6rem,6vw,5rem);line-height:.9;letter-spacing:-.04em}
+.stat__v sup{font-size:.4em;vertical-align:super;color:var(--red)}
+.stat__l{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel);font-weight:500}
+.roles{display:flex;flex-wrap:wrap;gap:10px;padding-top:22px}
+.role{border:1px solid var(--hair);padding:10px 14px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+
+/* ============================================================
+   VISION (inverted)
+   ============================================================ */
+.vision{background:var(--red);color:#fff;position:relative;overflow:hidden}
+.vision .index{color:rgba(255,255,255,.7)}
+.vision .eyebrow{color:rgba(255,255,255,.75)}
+.vision .eyebrow::before{background:#fff}
+.vision__q{
+  font-family:var(--d);font-weight:800;text-transform:uppercase;
+  font-size:clamp(1.7rem,4.4vw,3.9rem);line-height:1.02;letter-spacing:-.025em;max-width:20ch;
+  padding:clamp(20px,3vw,40px) 0;
+}
+.vision__b{max-width:60ch;font-size:clamp(14px,1.2vw,17px);line-height:1.6;color:rgba(255,255,255,.86)}
+.vision__lines{position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0 39px,rgba(0,0,0,.12) 39px 40px)}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--hair)}
+@media (max-width:900px){ .contact{grid-template-columns:1fr} }
+.contact__l{padding:clamp(28px,3vw,48px) clamp(20px,3vw,56px) clamp(28px,3vw,48px) 0}
+.contact__r{padding:clamp(28px,3vw,48px) 0 clamp(28px,3vw,48px) clamp(20px,3vw,56px);border-left:1px solid var(--hair)}
+@media (max-width:900px){
+  .contact__l{padding-right:0}
+  .contact__r{border-left:0;border-top:1px solid var(--hair);padding-left:0}
+}
+.clines{border-top:1px solid var(--hair-soft);margin-top:26px}
+.cline{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--hair-soft);transition:padding-left .45s var(--e),color .3s}
+a.cline:hover{padding-left:10px;color:var(--red)}
+.cline__k{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel)}
+.cline__v{font-family:var(--d);font-weight:700;text-transform:uppercase;font-size:clamp(.95rem,1.5vw,1.2rem);letter-spacing:.01em}
+
+.field{position:relative;border-bottom:1px solid var(--hair-soft);padding-top:22px;margin-bottom:22px}
+.field label{position:absolute;top:22px;left:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);pointer-events:none;transition:all .35s var(--e)}
+.field input,.field textarea{
+  width:100%;background:none;border:0;padding:4px 0 12px;font-size:15px;font-family:var(--m);font-weight:300;color:var(--bone);resize:vertical;
+}
+.field input:focus,.field textarea:focus{outline:none}
+.field input:focus + label,.field textarea:focus + label,
+.field input:not(:placeholder-shown) + label,.field textarea:not(:placeholder-shown) + label{
+  top:2px;font-size:9.5px;letter-spacing:.2em;color:var(--red);
+}
+.field::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--red);transition:width .5s var(--e)}
+.field:focus-within::after{width:100%}
+.formnote{font-size:11px;color:var(--steel);margin-top:14px;letter-spacing:.04em}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{border-top:1px solid var(--hair);padding:26px 0 30px}
+.foot__in{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel)}
+.foot a:hover{color:var(--red)}
+.backtop{display:inline-flex;align-items:center;gap:8px}
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+[data-rv]{opacity:0;transform:translateY(26px);transition:opacity .8s var(--e),transform .9s var(--e);transition-delay:var(--dl,0ms)}
+[data-rv].in{opacity:1;transform:none}
+.line-in{display:block;overflow:hidden}
+.line-in > span{display:block;transform:translateY(105%);transition:transform 1s var(--e);transition-delay:var(--dl,0ms)}
+.in .line-in > span,.line-in.in > span{transform:translateY(0)}
+
+/* cursor */
+.cur,.cur-r{position:fixed;top:0;left:0;pointer-events:none;z-index:70;mix-blend-mode:difference}
+.cur{width:6px;height:6px;background:var(--bone);margin:-3px 0 0 -3px}
+.cur-r{width:34px;height:34px;border:1px solid rgba(242,239,233,.5);margin:-17px 0 0 -17px;transition:transform .25s var(--e),opacity .25s}
+body.hovering .cur-r{transform:scale(1.55);border-color:var(--red)}
+@media (hover:none),(max-width:900px){ .cur,.cur-r{display:none} }
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:80;background:var(--void);display:grid;place-items:center;transition:clip-path 1s var(--e);clip-path:inset(0 0 0 0)}
+.loader.gone{clip-path:inset(0 0 100% 0);pointer-events:none}
+.loader__t{font-family:var(--d);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:.3em;color:var(--steel)}
+.loader__bar{width:min(240px,60vw);height:1px;background:rgba(242,239,233,.14);margin-top:14px;position:relative;overflow:hidden}
+.loader__bar i{position:absolute;inset:0;background:var(--red);transform:scaleX(0);transform-origin:left;animation:load .9s var(--e) forwards}
+@keyframes load{to{transform:scaleX(1)}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  [data-rv]{opacity:1;transform:none}
+  .hero__name .ch{transform:none;opacity:1}
+  .line-in > span{transform:none}
+  .grain{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div style="text-align:center">
+  <div class="loader__t">Vaishnav Cibu</div>
+  <div class="loader__bar"><i></i></div>
+</div></div>
+
+<div class="grid-bg" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cur" aria-hidden="true"></div>
+<div class="cur-r" aria-hidden="true"></div>
+<div class="progress" id="prog" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav__in">
+    <a href="#top" class="brand">
+      <span class="brand__mark">VC</span>
+      <span class="brand__txt">Vaishnav&nbsp;Cibu</span>
+    </a>
+    <div class="nav__status"><span class="dot"></span> Kerala, IN — open to work</div>
+    <a href="#contact" class="nav__cta">Contact</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">
+      <span id="burgerLabel">Menu</span>
+      <span class="burger__ico" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </div>
+</header>
+
+<!-- MENU -->
+<nav class="menu" id="menu" aria-label="Main">
+  <div class="menu__in">
+    <a href="#about"><span>01</span> About</a>
+    <a href="#company"><span>02</span> Company</a>
+    <a href="#work"><span>03</span> What I do</a>
+    <!-- <a href="#projects"><span>04</span> Projects</a> -->
+    <a href="#stack"><span>05</span> Stack</a>
+    <a href="#process"><span>06</span> Process</a>
+    <a href="#contact"><span>07</span> Contact</a>
+  </div>
+</nav>
+
+<div class="shell" id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero band--tight" aria-label="Introduction">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <span class="index">00://HERO</span>
+
+    <h1 class="hero__name" id="heroName">Vaishnav Cibu</h1>
+
+    <div class="hero__role">
+      <b>Software Engineer</b><i>/</i><b>AI Product Builder</b><i>/</i><b>Startup Founder</b>
+    </div>
+
+    <div class="hero__grid">
+      <div class="hero__lead">
+        <p class="hero__claim" data-rv>I don't just build software — I build products that solve real business problems.</p>
+        <p class="lede" data-rv style="--dl:120ms;margin-top:22px">From AI-powered applications and enterprise software to SaaS platforms and scalable web systems, I combine engineering, design and business thinking to create products that people actually use.</p>
+        <p class="lede muted" data-rv style="--dl:200ms">Whether it's a marketplace for outdoor advertising, an offline OCR engine that reads printed bills, or a startup product built from scratch, the focus stays the same: <span class="red">technology that creates measurable impact.</span></p>
+      </div>
+
+      <div class="hero__side">
+        <dl class="hero__meta" data-rv style="--dl:160ms">
+          <div><dt>Based in</dt><dd>Kerala, India</dd></div>
+          <div><dt>Focus</dt><dd>AI &amp; Product</dd></div>
+          <div><dt>Products shipped</dt><dd>10+</dd></div>
+          <div><dt>Availability</dt><dd>Open</dd></div>
+        </dl>
+        <div class="hero__acts" data-rv style="--dl:240ms">
+          <!-- <a href="#projects" class="btn">View projects <span class="arw">→</span></a> -->
+          <a href="#contact" class="btn btn--ghost">Contact me <span class="arw">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track" data-marquee>
+    <span>AI Applications</span><span>Full Stack Development</span><span>Mobile Development</span><span>Enterprise Software</span><span>SaaS Products</span><span>UI/UX Design</span>
+  </div>
+</div>
+
+<!-- ============================ ABOUT ============================ -->
+<section class="band" id="about">
+  <div class="wrap" style="position:relative">
+    <span class="index">01://ABOUT</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>About me</p>
+        <h2 class="h-lg shead__t" data-rv style="--dl:80ms">Turning ideas into scalable products</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">I'm a software developer, entrepreneur and product builder who likes hard problems and finished work.</p>
+    </div>
+
+    <div class="about">
+      <div class="about__col" data-rv>
+        <p class="lede">My journey started with curiosity about programming, but it quickly turned into building complete digital products — from backend architecture and mobile applications to AI-powered solutions and enterprise software.</p>
+        <p class="lede muted">I believe great software isn't defined by elegant code alone. It's measured by the value it creates for users and businesses.</p>
+      </div>
+      <div class="about__col" data-rv style="--dl:120ms">
+        <p class="lede">Today I focus on designing scalable systems, AI integrations, cloud infrastructure and user-first applications that help businesses grow.</p>
+        <div class="chips" style="margin-top:22px">
+          <span class="chip">Scalable systems</span><span class="chip">AI integration</span><span class="chip">Cloud infrastructure</span><span class="chip">Product design</span><span class="chip">MVP → Production</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ COMPANY ============================ -->
+<section class="band" id="company">
+  <div class="wrap" style="position:relative">
+    <span class="index">02://COMPANY</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>The company</p>
+        <h2 class="h-lg shead__t" data-rv style="--dl:80ms">Corezentric<br>Technologies LLP</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">Corezentric builds CORE &mdash; an OOH advertising platform for hoarding and digital-billboard operators in Kerala, replacing spreadsheet guesswork with real inventory, campaign, and billing management.</p>
+    </div>
+
+    <div class="panel" data-rv>
+      <div class="spec__bar">
+        <div class="spec__no">LLP</div>
+        <div class="spec__ttl">
+          <h3 class="h-md">Founder</h3>
+          <span class="spec__kind">Registered in India</span>
+        </div>
+      </div>
+
+      <div class="spec__body">
+        <div class="spec__l">
+          <p class="spec__d">Corezentric Technologies LLP builds CORE, a platform for managing out-of-home (OOH) advertising. Its first product, Hoardgrid, helps billboard owners manage inventory, campaigns, contracts, and billing.</p>
+          <p class="spec__d" style="margin-top:16px">We are expanding the CORE ecosystem with products like Hoardbook, a marketplace that connects advertisers with billboard owners. Our vision is to build the operating system for the OOH advertising industry while growing a team focused on scalable, innovative SaaS solutions.</p>
+
+          <span class="spec__lbl" style="margin-top:24px">What we do</span>
+          <div class="chips">
+            <span class="chip">AI applications</span><span class="chip">Enterprise software</span><span class="chip">SaaS products</span><span class="chip">Mobile apps</span><span class="chip">Product design</span>
+          </div>
+        </div>
+
+        <div class="spec__r">
+          <div>
+            <span class="spec__lbl">Registration</span>
+            <dl class="hero__meta">
+              <div><dt>Role</dt><dd>Founder</dd></div>
+              <div><dt>Founded</dt><dd>2026</dd></div>
+              <div><dt>Entity</dt><dd>LLP</dd></div>
+              <div><dt>LLPIN</dt><dd>ACY-6591</dd></div>
+            </dl>
+          </div>
+          <!-- <div>
+            <span class="spec__lbl">Links</span>
+            <div class="clines" style="margin-top:0;border-top:0">
+              <a class="cline" href="#" target="_blank" rel="noopener"><span class="cline__v">Website</span><span class="cline__k">↗</span></a>
+              <a class="cline" href="#" target="_blank" rel="noopener"><span class="cline__v">LinkedIn</span><span class="cline__k">↗</span></a>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHAT I DO ============================ -->
+<section class="band" id="work">
+  <div class="wrap" style="position:relative">
+    <span class="index">03://CAPABILITIES</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>What I do</p>
+        <h2 class="h-lg shead__t" data-rv style="--dl:80ms">Six ways I ship</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">Every engagement runs end to end — architecture, interface, deployment and the iteration after launch.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card" data-rv>
+        <span class="card__no">AI-01</span>
+        <h3 class="card__t h-md">AI Applications</h3>
+        <p class="card__d">AI-powered software built with modern LLMs, OCR, computer vision, automation and intelligent workflows.</p>
+        <div class="chips"><span class="chip">LLMs</span><span class="chip">OCR</span><span class="chip">Vision</span><span class="chip">Automation</span></div>
+      </article>
+
+      <article class="card" data-rv style="--dl:60ms">
+        <span class="card__no">FS-02</span>
+        <h3 class="card__t h-md">Full Stack Development</h3>
+        <p class="card__d">Modern web applications with a backend that holds up under real traffic and real data.</p>
+        <div class="chips"><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">React</span><span class="chip">Flutter</span><span class="chip">REST APIs</span></div>
+      </article>
+
+      <article class="card" data-rv style="--dl:120ms">
+        <span class="card__no">MB-03</span>
+        <h3 class="card__t h-md">Mobile Development</h3>
+        <p class="card__d">Cross-platform mobile applications built with Flutter for Android, iOS and web from one codebase.</p>
+        <div class="chips"><span class="chip">Flutter</span><span class="chip">Android</span><span class="chip">iOS</span><span class="chip">Web</span></div>
+      </article>
+
+      <article class="card" data-rv style="--dl:180ms">
+        <span class="card__no">EN-04</span>
+        <h3 class="card__t h-md">Enterprise Software</h3>
+        <p class="card__d">Business management systems, ERP solutions, workflow automation, dashboards and custom internal software.</p>
+        <div class="chips"><span class="chip">ERP</span><span class="chip">Dashboards</span><span class="chip">Workflow</span></div>
+      </article>
+
+      <article class="card" data-rv style="--dl:240ms">
+        <span class="card__no">SA-05</span>
+        <h3 class="card__t h-md">SaaS Products</h3>
+        <p class="card__d">Subscription products designed to scale from a first MVP to a production platform with paying customers.</p>
+        <div class="chips"><span class="chip">MVP</span><span class="chip">Multi-tenant</span><span class="chip">Billing</span></div>
+      </article>
+
+      <article class="card" data-rv style="--dl:300ms">
+        <span class="card__no">UX-06</span>
+        <h3 class="card__t h-md">UI/UX Design</h3>
+        <p class="card__d">Clean interfaces that balance simplicity, usability and the business goal behind the screen.</p>
+        <div class="chips"><span class="chip">Figma</span><span class="chip">Design systems</span><span class="chip">Prototyping</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROJECTS ============================ -->
+<!-- <section class="band" id="projects">
+  <div class="wrap" style="position:relative">
+    <span class="index">04://PROJECTS</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>Featured projects</p>
+        <h2 class="h-lg shead__t" data-rv style="--dl:80ms">Six products, start to finish</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">Enterprise platforms, marketplaces and AI tooling — each one taken from problem statement to running software.</p>
+    </div>
+
+    <div class="deck">
+
+      <article class="spec" style="top:calc(var(--nav) + 14px)" data-rv>
+        <div class="spec__bar">
+          <div class="spec__no">01</div>
+          <div class="spec__ttl"><h3>Review2Reward</h3><span class="spec__kind">QR-based customer engagement</span></div>
+        </div>
+        <div class="spec__body">
+          <div class="spec__l">
+            <p class="spec__d">A platform that helps businesses collect authentic Google reviews while rewarding customers with instant discounts and offers at the counter.</p>
+            <span class="spec__lbl" style="margin-top:24px">Features</span>
+            <ul class="feat">
+              <li>QR code generation</li><li>Review verification</li><li>Analytics dashboard</li><li>Campaign management</li><li>Reward automation</li>
+            </ul>
+          </div>
+          <div class="spec__r">
+            <div>
+              <span class="spec__lbl">Technology</span>
+              <div class="chips"><span class="chip">Flutter</span><span class="chip">Node.js</span><span class="chip">MongoDB</span><span class="chip">REST APIs</span></div>
+            </div>
+            <div class="schem" data-tag="scan → review → reward" aria-hidden="true"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="spec" style="top:calc(var(--nav) + 26px)" data-rv>
+        <div class="spec__bar">
+          <div class="spec__no">02</div>
+          <div class="spec__ttl"><h3>HoardBook</h3><span class="spec__kind">Digital billboard marketplace</span></div>
+        </div>
+        <div class="spec__body">
+          <div class="spec__l">
+            <p class="spec__d">An online platform for discovering, comparing and booking outdoor advertising spaces — bringing an offline, broker-led market onto a single screen.</p>
+            <span class="spec__lbl" style="margin-top:24px">Features</span>
+            <ul class="feat">
+              <li>Billboard discovery</li><li>Booking system</li><li>Vendor dashboard</li><li>Analytics</li><li>Payments</li>
+            </ul>
+          </div>
+          <div class="spec__r">
+            <div>
+              <span class="spec__lbl">Technology</span>
+              <div class="chips"><span class="chip">React</span><span class="chip">Node.js</span><span class="chip">MongoDB</span><span class="chip">Payments</span></div>
+            </div>
+            <div class="schem" data-tag="marketplace" aria-hidden="true"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="spec" style="top:calc(var(--nav) + 38px)" data-rv>
+        <div class="spec__bar">
+          <div class="spec__no">03</div>
+          <div class="spec__ttl"><h3>HoardGrid</h3><span class="spec__kind">Outdoor advertising management SaaS</span></div>
+        </div>
+        <div class="spec__body">
+          <div class="spec__l">
+            <p class="spec__d">A cloud-based management platform for billboard owners to run inventory, clients, campaigns and revenue from one place — the operator side of the HoardBook marketplace.</p>
+            <span class="spec__lbl" style="margin-top:24px">Features</span>
+            <ul class="feat">
+              <li>Inventory management</li><li>Client records</li><li>Campaign scheduling</li><li>Revenue reporting</li>
+            </ul>
+          </div>
+          <div class="spec__r">
+            <div>
+              <span class="spec__lbl">Technology</span>
+              <div class="chips"><span class="chip">React</span><span class="chip">Node.js</span><span class="chip">MongoDB</span><span class="chip">Cloud</span></div>
+            </div>
+            <div class="schem" data-tag="SaaS" aria-hidden="true"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="spec" style="top:calc(var(--nav) + 50px)" data-rv>
+        <div class="spec__bar">
+          <div class="spec__no">04</div>
+          <div class="spec__ttl"><h3>LinkedOut</h3><span class="spec__kind">Next-generation career platform</span></div>
+        </div>
+        <div class="spec__body">
+          <div class="spec__l">
+            <p class="spec__d">A swipe-based recruitment platform connecting students, companies and recruiters, with AI-powered matching that puts the right profile in front of the right desk.</p>
+            <span class="spec__lbl" style="margin-top:24px">Features</span>
+            <ul class="feat">
+              <li>Swipe-based matching</li><li>AI candidate ranking</li><li>Recruiter workspace</li><li>Student profiles</li>
+            </ul>
+          </div>
+          <div class="spec__r">
+            <div>
+              <span class="spec__lbl">Technology</span>
+              <div class="chips"><span class="chip">Flutter</span><span class="chip">Node.js</span><span class="chip">MongoDB</span><span class="chip">OpenAI APIs</span></div>
+            </div>
+            <div class="schem" data-tag="AI matching" aria-hidden="true"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="spec" style="top:calc(var(--nav) + 62px)" data-rv>
+        <div class="spec__bar">
+          <div class="spec__no">05</div>
+          <div class="spec__ttl"><h3>OCR Bill Extractor</h3><span class="spec__kind">AI document processing</span></div>
+        </div>
+        <div class="spec__body">
+          <div class="spec__l">
+            <p class="spec__d">An offline OCR application that extracts printed bills into structured digital formats — no server round trip, no data leaving the device.</p>
+            <span class="spec__lbl" style="margin-top:24px">Features</span>
+            <ul class="feat">
+              <li>Offline extraction</li><li>Structured output</li><li>CSV export</li><li>Batch scanning</li>
+            </ul>
+          </div>
+          <div class="spec__r">
+            <div>
+              <span class="spec__lbl">Technologies</span>
+              <div class="chips"><span class="chip">Flutter</span><span class="chip">Google ML Kit</span><span class="chip">Tesseract OCR</span><span class="chip">CSV Export</span></div>
+            </div>
+            <div class="schem" data-tag="on-device" aria-hidden="true"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="spec" style="top:calc(var(--nav) + 74px)" data-rv>
+        <div class="spec__bar">
+          <div class="spec__no">06</div>
+          <div class="spec__ttl"><h3>NFC Smart Cycle Booking</h3><span class="spec__kind">Smart campus solution</span></div>
+        </div>
+        <div class="spec__body">
+          <div class="spec__l">
+            <p class="spec__d">A Flutter application using NFC authentication for secure bicycle booking inside educational campuses — tap to unlock, tap to return.</p>
+            <span class="spec__lbl" style="margin-top:24px">Features</span>
+            <ul class="feat">
+              <li>NFC authentication</li><li>Booking &amp; return flow</li><li>Usage tracking</li><li>Campus admin view</li>
+            </ul>
+          </div>
+          <div class="spec__r">
+            <div>
+              <span class="spec__lbl">Technology</span>
+              <div class="chips"><span class="chip">Flutter</span><span class="chip">NFC</span><span class="chip">Firebase</span></div>
+            </div>
+            <div class="schem" data-tag="tap → ride" aria-hidden="true"></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section> -->
+
+<!-- ============================ STACK ============================ -->
+<section class="band" id="stack">
+  <div class="wrap" style="position:relative">
+    <span class="index">05://STACK</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>Technical skills</p>
+        <h2 class="h-lg shead__t" data-rv style="--dl:80ms">The toolkit</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">Languages, frameworks and infrastructure I use daily — chosen for what the product needs, not for what's trending.</p>
+    </div>
+
+    <div class="skills">
+      <div class="skillrow" data-rv>
+        <h4><em>01 / LANG</em>Languages</h4>
+        <div class="chips">
+          <span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">Python</span><span class="chip">Dart</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">SQL</span>
+        </div>
+      </div>
+      <div class="skillrow" data-rv style="--dl:60ms">
+        <h4><em>02 / FRAME</em>Frameworks</h4>
+        <div class="chips">
+          <span class="chip">Flutter</span><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">React</span><span class="chip">Bootstrap</span>
+        </div>
+      </div>
+      <div class="skillrow" data-rv style="--dl:120ms">
+        <h4><em>03 / DATA</em>Databases</h4>
+        <div class="chips">
+          <span class="chip">MongoDB</span><span class="chip">MySQL</span><span class="chip">Firebase</span><span class="chip">SQLite</span>
+        </div>
+      </div>
+      <div class="skillrow" data-rv style="--dl:180ms">
+        <h4><em>04 / INTEL</em>AI &amp; Machine Learning</h4>
+        <div class="chips">
+          <span class="chip">OpenAI APIs</span><span class="chip">OCR</span><span class="chip">LLMs</span><span class="chip">Prompt Engineering</span><span class="chip">Computer Vision</span><span class="chip">Automation</span>
+        </div>
+      </div>
+      <div class="skillrow" data-rv style="--dl:240ms">
+        <h4><em>05 / TOOLS</em>Tools</h4>
+        <div class="chips">
+          <span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">VS Code</span><span class="chip">Android Studio</span><span class="chip">Postman</span><span class="chip">Figma</span><span class="chip">Docker</span><span class="chip">Linux</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker ticker--dark ticker--rev" aria-hidden="true">
+  <div class="ticker__track" data-marquee>
+    <span>Flutter</span><span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>Firebase</span><span>MySQL</span><span>Git</span><span>Docker</span><span>Linux</span><span>REST APIs</span><span>OpenAI</span><span>Google ML Kit</span><span>Figma</span><span>Java</span><span>Python</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Bootstrap</span>
+  </div>
+</div>
+
+<!-- ============================ PROCESS ============================ -->
+<section class="band" id="process">
+  <div class="wrap" style="position:relative">
+    <span class="index">06://PROCESS</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>My development process</p>
+        <h2 class="h-lg shead__t" data-rv style="--dl:80ms">Five stages, in order</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">The sequence matters. Discovery before design, design before code, and improvement that never really stops.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-rv>
+        <span class="step__n">01</span>
+        <h4 class="h-md">Discovery</h4>
+        <p>Understanding business goals, users and technical requirements before a line of code exists.</p>
+      </div>
+      <div class="step" data-rv style="--dl:60ms">
+        <span class="step__n">02</span>
+        <h4 class="h-md">Product design</h4>
+        <p>Planning architecture, user experience and infrastructure that can scale with the business.</p>
+      </div>
+      <div class="step" data-rv style="--dl:120ms">
+        <span class="step__n">03</span>
+        <h4 class="h-md">Development</h4>
+        <p>Building secure, maintainable and production-ready applications with tests and reviews.</p>
+      </div>
+      <div class="step" data-rv style="--dl:180ms">
+        <span class="step__n">04</span>
+        <h4 class="h-md">Deployment</h4>
+        <p>Cloud deployment, testing, optimisation and monitoring so launch day is uneventful.</p>
+      </div>
+      <div class="step" data-rv style="--dl:240ms">
+        <span class="step__n">05</span>
+        <h4 class="h-md">Continuous improvement</h4>
+        <p>Adding new features based on user feedback and analytics after the product is live.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHY ============================ -->
+<section class="band" id="why">
+  <div class="wrap" style="position:relative">
+    <span class="index">07://WHY</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>Why work with me</p>
+        <h2 class="h-lg shead__t" data-rv style="--dl:80ms">Engineering with a business brain</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">Five things that tend to matter more than the framework on the CV.</p>
+    </div>
+
+    <div class="why">
+      <div class="why__c" data-rv><span class="why__k">01</span><h3 class="why__t h-sm">Product mindset</h3><p class="why__d">I think beyond writing code — the product has to work as a business, not just compile.</p></div>
+      <div class="why__c" data-rv style="--dl:60ms"><span class="why__k">02</span><h3 class="why__t h-sm">Startup experience</h3><p class="why__d">I've taken products from idea to MVP, with the constraints that come with it.</p></div>
+      <div class="why__c" data-rv style="--dl:120ms"><span class="why__k">03</span><h3 class="why__t h-sm">End-to-end development</h3><p class="why__d">Frontend, backend, database, APIs and deployment handled by one person.</p></div>
+      <div class="why__c" data-rv style="--dl:180ms"><span class="why__k">04</span><h3 class="why__t h-sm">AI integration</h3><p class="why__d">Modern AI solutions that measurably improve productivity and automation.</p></div>
+      <div class="why__c" data-rv style="--dl:240ms"><span class="why__k">05</span><h3 class="why__t h-sm">Business focus</h3><p class="why__d">Technology should generate measurable business value. That's the scorecard.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ NUMBERS ============================ -->
+<section class="band band--tight">
+  <div class="wrap" style="position:relative">
+    <span class="index">08://NUMBERS</span>
+    <p class="eyebrow" data-rv style="margin-bottom:26px">By the numbers</p>
+
+    <div class="stats">
+      <div class="stat" data-rv>
+        <span class="stat__v"><span data-count="10">0</span><sup>+</sup></span>
+        <span class="stat__l">Products designed</span>
+      </div>
+      <div class="stat" data-rv style="--dl:80ms">
+        <span class="stat__v"><span data-count="40">0</span><sup>+</sup></span>
+        <span class="stat__l">Enterprise modules built</span>
+      </div>
+      <div class="stat" data-rv style="--dl:160ms">
+        <span class="stat__v"><span data-count="1000">0</span><sup>+</sup></span>
+        <span class="stat__l">Development hours</span>
+      </div>
+    </div>
+
+    <div class="roles" data-rv style="--dl:220ms">
+      <span class="role">Full stack + AI developer</span>
+      <span class="role">Startup founder</span>
+      <span class="role">Continuous learner</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ VISION ============================ -->
+<section class="band vision" id="vision">
+  <div class="vision__lines" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <span class="index">09://VISION</span>
+    <p class="eyebrow" data-rv>My vision</p>
+    <p class="vision__q" data-rv style="--dl:80ms">Software should simplify complexity, empower people and create lasting business value.</p>
+    <p class="vision__b" data-rv style="--dl:160ms">My long-term goal is to build innovative technology companies that solve meaningful real-world problems using artificial intelligence, scalable software and thoughtful product design.</p>
+  </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section class="band" id="contact">
+  <div class="wrap" style="position:relative">
+    <span class="index">10://CONTACT</span>
+
+    <div class="shead">
+      <div>
+        <p class="eyebrow" data-rv>Contact</p>
+        <h2 class="h-xl shead__t" data-rv style="--dl:80ms">Let's build something extraordinary</h2>
+      </div>
+      <p class="lede" data-rv style="--dl:140ms">Tell me what you're building and where it's stuck. I'll tell you what I'd do about it.</p>
+    </div>
+
+    <div class="contact">
+      <div class="contact__l" data-rv>
+        <span class="cline__k">Direct</span>
+        <div class="clines">
+          <a class="cline" href="mailto:vaishnavcibu@gmail.com">
+            <span class="cline__v">vaishnavcibu@gmail.com</span><span class="cline__k">Email</span>
+          </a>
+          <a class="cline" href="tel:+919400865111">
+            <span class="cline__v">+91 94008 65111</span><span class="cline__k">Phone</span>
+          </a>
+          <div class="cline">
+            <span class="cline__v">Kerala, India</span><span class="cline__k">Location</span>
+          </div>
+          <a class="cline" href="https://github.com/Vaishnavcibu" target="_blank" rel="noopener">
+            <span class="cline__v">GitHub</span><span class="cline__k">↗</span>
+          </a>
+          <a class="cline" href="https://www.linkedin.com/in/vaishnav-cibu-5766b2278/" target="_blank" rel="noopener">
+            <span class="cline__v">LinkedIn</span><span class="cline__k">↗</span>
+          </a>
+          <a class="cline" href="#top">
+            <span class="cline__v">Portfolio</span><span class="cline__k">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact__r" data-rv style="--dl:120ms">
+        <span class="cline__k">Send a message</span>
+        <form id="form" style="margin-top:22px" novalidate>
+          <div class="field">
+            <input id="fname" name="name" type="text" placeholder=" " required autocomplete="name">
+            <label for="fname">Your name</label>
+          </div>
+          <div class="field">
+            <input id="femail" name="email" type="email" placeholder=" " required autocomplete="email">
+            <label for="femail">Email</label>
+          </div>
+          <div class="field">
+            <textarea id="fmsg" name="message" rows="3" placeholder=" " required></textarea>
+            <label for="fmsg">What are you building?</label>
+          </div>
+          <button class="btn" type="submit">Send message <span class="arw">→</span></button>
+          <p class="formnote" id="formnote">Opens your mail app with the message drafted.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__in">
+      <span>© <span id="yr">2026</span> Vaishnav Cibu</span>
+      <span>Founder · Corezentric Technologies LLP</span>
+      <a href="#top" class="backtop">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /shell -->
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- loader ---------- */
+  function reveal(){
+    document.body.classList.add('is-loaded');
+    var l = document.getElementById('loader');
+    if(l){ l.classList.add('gone'); setTimeout(function(){ l.remove(); }, 1100); }
+  }
+  window.addEventListener('load', function(){ setTimeout(reveal, reduce ? 0 : 550); });
+  setTimeout(reveal, 2600); // safety net
+
+  /* ---------- hero name: per-character rise ---------- */
+  var name = document.getElementById('heroName');
+  if(name){
+    var txt = name.textContent.trim(), words = txt.split(/\s+/), out = '', i = 0;
+    words.forEach(function(w, wi){
+      out += '<span class="wd">';
+      for(var c = 0; c < w.length; c++){
+        out += '<span class="ch" style="--i:' + (i++) + '">' + w[c] + '</span>';
+      }
+      out += '</span>';
+      if(wi < words.length - 1) out += '<span class="sp"></span>';
+    });
+    name.setAttribute('aria-label', txt);
+    name.innerHTML = out + '<span class="caret" aria-hidden="true"></span>';
+  }
+
+  /* ---------- scroll reveal ---------- */
+  var rv = document.querySelectorAll('[data-rv]');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {rootMargin:'0px 0px -12% 0px', threshold:0.08});
+    rv.forEach(function(el){ io.observe(el); });
+  } else {
+    rv.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- counters ---------- */
+  var counters = document.querySelectorAll('[data-count]');
+  function run(el){
+    var target = parseInt(el.getAttribute('data-count'), 10), start = null, dur = 1400;
+    if(reduce){ el.textContent = target; return; }
+    function tick(t){
+      if(!start) start = t;
+      var p = Math.min((t - start)/dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if(p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  if('IntersectionObserver' in window){
+    var cio = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ run(e.target); cio.unobserve(e.target); } });
+    }, {threshold:0.5});
+    counters.forEach(function(el){ cio.observe(el); });
+  } else { counters.forEach(run); }
+
+  /* ---------- marquee: duplicate track for seamless loop ---------- */
+  document.querySelectorAll('[data-marquee]').forEach(function(track){
+    track.innerHTML = track.innerHTML + track.innerHTML;
+  });
+
+  /* ---------- menu ---------- */
+  var burger = document.getElementById('burger'),
+      label  = document.getElementById('burgerLabel'),
+      menu   = document.getElementById('menu');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    document.body.classList.toggle('locked', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    label.textContent = open ? 'Close' : 'Menu';
+  }
+  burger.addEventListener('click', function(){
+    setMenu(!document.body.classList.contains('menu-open'));
+  });
+  menu.addEventListener('click', function(e){
+    if(e.target.closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && document.body.classList.contains('menu-open')) setMenu(false);
+  });
+
+  /* ---------- scroll progress ---------- */
+  var prog = document.getElementById('prog'), ticking = false;
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ requestAnimationFrame(onScroll); ticking = true; }
+  }, {passive:true});
+  onScroll();
+
+  /* ---------- cursor ---------- */
+  var dot = document.querySelector('.cur'), ring = document.querySelector('.cur-r');
+  if(dot && window.matchMedia('(hover:hover)').matches && !reduce){
+    var mx = 0, my = 0, rx = 0, ry = 0;
+    window.addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+    }, {passive:true});
+    (function loop(){
+      rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)' +
+        (document.body.classList.contains('hovering') ? ' scale(1.55)' : '');
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button,.card,.spec,.why__c,input,textarea').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ document.body.classList.add('hovering'); });
+      el.addEventListener('mouseleave', function(){ document.body.classList.remove('hovering'); });
+    });
+  }
+
+  /* ---------- schematic decoration ---------- */
+  document.querySelectorAll('.schem').forEach(function(s){
+    for(var k = 0; k < 5; k++){
+      var b = document.createElement('i');
+      var horiz = Math.random() > 0.5;
+      b.style.height = horiz ? '2px' : (18 + Math.random()*46) + 'px';
+      b.style.width  = horiz ? (26 + Math.random()*90) + 'px' : '2px';
+      b.style.left   = (Math.random()*80) + '%';
+      b.style.top    = (Math.random()*70) + '%';
+      b.style.opacity = 0.35 + Math.random()*0.5;
+      s.appendChild(b);
+    }
+  });
+
+  /* ---------- contact form ----------
+     Right now: opens the visitor's mail app, addressed to INBOX.
+
+     To get messages delivered straight to Gmail instead:
+       1. Go to https://web3forms.com and enter vaishnavcibu@gmail.com
+       2. They email you an access key (free, no account)
+       3. Paste it into WEB3FORMS_KEY below — that's the only change needed. */
+  var INBOX         = 'vaishnavcibu@gmail.com';
+  var WEB3FORMS_KEY = 'fab818e2-40c2-4219-8a88-d6bbaf48b001';
+  var ENDPOINT      = WEB3FORMS_KEY ? 'https://api.web3forms.com/submit' : '';
+
+  var form = document.getElementById('form'), note = document.getElementById('formnote');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var n  = document.getElementById('fname').value.trim(),
+        em = document.getElementById('femail').value.trim(),
+        m  = document.getElementById('fmsg').value.trim();
+
+    if(!n || !em || !m){
+      note.textContent = 'Add your name, email and a short message first.';
+      note.style.color = '#ff3b2f';
+      return;
+    }
+    note.style.color = '';
+
+    if(!ENDPOINT){
+      note.textContent = 'Opening your mail app…';
+      var subject = encodeURIComponent('Project enquiry from ' + n);
+      var body = encodeURIComponent(m + '\n\n—\n' + n + '\n' + em);
+      window.location.href = 'mailto:' + INBOX + '?subject=' + subject + '&body=' + body;
+      return;
+    }
+
+    note.textContent = 'Sending…';
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {'Accept':'application/json','Content-Type':'application/json'},
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        name: n, email: em, message: m,
+        subject: 'Portfolio enquiry from ' + n,
+        from_name: 'Portfolio site'
+      })
+    })
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r; })
+    .then(function(){
+      form.reset();
+      note.textContent = 'Message sent. You will get a reply at ' + em + '.';
+    })
+    .catch(function(){
+      note.style.color = '#ff3b2f';
+      note.textContent = 'That did not go through. Email ' + INBOX + ' directly.';
+    });
+  });
+
+  /* ---------- year ---------- */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
