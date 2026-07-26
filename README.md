@@ -1,52 +1,49 @@
-## Hi there 👋
+<div align="center">
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:070707,100:E10600&height=170&section=header&text=VAISHNAV%20CIBU&fontSize=56&fontColor=F2EFE9&fontAlignY=42&desc=SOFTWARE%20ENGINEER%20%C2%B7%20AI%20PRODUCT%20BUILDER%20%C2%B7%20STARTUP%20FOUNDER&descSize=15&descAlignY=68" width="100%" />
+</div>
 
-<!--
-**Vaishnavcibu/Vaishnavcibu** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<div align="center">
+<img src="https://readme-typing-svg.demolab.com?font=IBM+Plex+Mono&weight=500&size=18&pause=1200&color=E10600&center=true&vCenter=true&width=640&height=45&lines=Founder+%40+Corezentric+Technologies+LLP;Building+CORE+%E2%80%94+the+OS+for+OOH+advertising;I+don't+just+build+software.+I+build+products." alt="" />
+</div>
 
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...<div align="center">
-
-# VAISHNAV CIBU
-
-**SOFTWARE ENGINEER** &nbsp;·&nbsp; **AI PRODUCT BUILDER** &nbsp;·&nbsp; **STARTUP FOUNDER**
-
-<img src="https://readme-typing-svg.demolab.com?font=IBM+Plex+Mono&weight=500&size=17&pause=1200&color=E10600&center=true&vCenter=true&width=620&lines=Founder+%40+Corezentric+Technologies+LLP;Building+CORE+%E2%80%94+the+OS+for+OOH+advertising;I+don't+just+build+software.+I+build+products." alt="" />
-
-![](https://img.shields.io/badge/KERALA,_INDIA-070707?style=for-the-badge&labelColor=070707)
-![](https://img.shields.io/badge/FOUNDER-E10600?style=for-the-badge&labelColor=E10600)
-![](https://img.shields.io/badge/OPEN_TO_WORK-070707?style=for-the-badge&labelColor=070707)
-![](https://komarev.com/ghpvc/?username=Vaishnavcibu&color=E10600&style=for-the-badge&label=VISITS)
-
+<div align="center">
+<img src="https://img.shields.io/badge/KERALA,_INDIA-070707?style=for-the-badge&labelColor=070707" alt="" />
+<img src="https://img.shields.io/badge/FOUNDER-E10600?style=for-the-badge&labelColor=E10600" alt="" />
+<img src="https://img.shields.io/badge/OPEN_TO_WORK-070707?style=for-the-badge&labelColor=070707" alt="" />
+<img src="https://komarev.com/ghpvc/?username=Vaishnavcibu&color=E10600&style=for-the-badge&label=VISITS" alt="" />
 </div>
 
 ---
 
-### `01://ABOUT`
+## `01://ABOUT`
 
 > **I don't just build software — I build products that solve real business problems.**
 
-My journey started with curiosity about programming and turned into building complete digital products — backend architecture, mobile apps, AI-powered tooling and enterprise software.
+- 🔴 &nbsp;Founder of **Corezentric Technologies LLP**, building **CORE** — the operating system for OOH advertising
+- ⚙️ &nbsp;Full stack + AI: Flutter, Node, React, MongoDB, OpenAI APIs
+- 🧠 &nbsp;Currently deep in **LLM integrations, OCR pipelines and multi-tenant SaaS**
+- 📍 &nbsp;Kerala, India — open to freelance and founding-engineer work
+- 💬 &nbsp;Ask me about shipping an MVP that survives real users
 
-Great software isn't defined by elegant code alone. It's measured by the value it creates for users and businesses. Today I focus on scalable systems, AI integrations, cloud infrastructure and user-first applications.
+Great software isn't defined by elegant code alone. It's measured by the value it creates for users and businesses.
 
 ---
 
-### `02://COMPANY`
+## `02://COMPANY`
 
 **Corezentric Technologies LLP** — building **CORE**, an OOH advertising platform for hoarding and digital-billboard operators in Kerala, replacing spreadsheet guesswork with real inventory, campaign and billing management.
 
 | SPEC | VALUE |
 | :--- | :--- |
-| **Role** | Founder |
-| **Founded** | 2026 |
-| **Entity** | LLP · `ACY-6591` |
-| **Products** | Hoardgrid · Hoardbook |
-| **Vision** | The operating system for the OOH advertising industry |
+| Role | Founder |
+| Founded | 2026 |
+| Entity | LLP · `ACY-6591` |
+| Products | Hoardgrid · Hoardbook |
+| Vision | The operating system for the OOH advertising industry |
 
 ---
 
-### `03://BUILDING`
+## `03://BUILDING`
 
 | # | PROJECT | WHAT IT IS | STACK |
 | :-- | :--- | :--- | :--- |
@@ -59,70 +56,49 @@ Great software isn't defined by elegant code alone. It's measured by the value i
 
 ---
 
-### `04://STACK`
-
-**Languages**
-
-![](https://img.shields.io/badge/Java-070707?style=flat-square&logo=openjdk&logoColor=E10600)
-![](https://img.shields.io/badge/JavaScript-070707?style=flat-square&logo=javascript&logoColor=E10600)
-![](https://img.shields.io/badge/Python-070707?style=flat-square&logo=python&logoColor=E10600)
-![](https://img.shields.io/badge/Dart-070707?style=flat-square&logo=dart&logoColor=E10600)
-![](https://img.shields.io/badge/HTML5-070707?style=flat-square&logo=html5&logoColor=E10600)
-![](https://img.shields.io/badge/CSS3-070707?style=flat-square&logo=css3&logoColor=E10600)
-![](https://img.shields.io/badge/SQL-070707?style=flat-square&logo=mysql&logoColor=E10600)
-
-**Frameworks**
-
-![](https://img.shields.io/badge/Flutter-070707?style=flat-square&logo=flutter&logoColor=E10600)
-![](https://img.shields.io/badge/Node.js-070707?style=flat-square&logo=nodedotjs&logoColor=E10600)
-![](https://img.shields.io/badge/Express-070707?style=flat-square&logo=express&logoColor=E10600)
-![](https://img.shields.io/badge/React-070707?style=flat-square&logo=react&logoColor=E10600)
-![](https://img.shields.io/badge/Bootstrap-070707?style=flat-square&logo=bootstrap&logoColor=E10600)
-
-**Data**
-
-![](https://img.shields.io/badge/MongoDB-070707?style=flat-square&logo=mongodb&logoColor=E10600)
-![](https://img.shields.io/badge/MySQL-070707?style=flat-square&logo=mysql&logoColor=E10600)
-![](https://img.shields.io/badge/Firebase-070707?style=flat-square&logo=firebase&logoColor=E10600)
-![](https://img.shields.io/badge/SQLite-070707?style=flat-square&logo=sqlite&logoColor=E10600)
-
-**AI &amp; Automation**
-
-![](https://img.shields.io/badge/OpenAI_APIs-070707?style=flat-square&logo=openai&logoColor=E10600)
-![](https://img.shields.io/badge/LLMs-070707?style=flat-square&logo=anthropic&logoColor=E10600)
-![](https://img.shields.io/badge/OCR-070707?style=flat-square&logo=googlelens&logoColor=E10600)
-![](https://img.shields.io/badge/Computer_Vision-070707?style=flat-square&logo=opencv&logoColor=E10600)
-![](https://img.shields.io/badge/Prompt_Engineering-070707?style=flat-square&logo=probot&logoColor=E10600)
-
-**Tools**
-
-![](https://img.shields.io/badge/Git-070707?style=flat-square&logo=git&logoColor=E10600)
-![](https://img.shields.io/badge/GitHub-070707?style=flat-square&logo=github&logoColor=E10600)
-![](https://img.shields.io/badge/VS_Code-070707?style=flat-square&logo=visualstudiocode&logoColor=E10600)
-![](https://img.shields.io/badge/Android_Studio-070707?style=flat-square&logo=androidstudio&logoColor=E10600)
-![](https://img.shields.io/badge/Postman-070707?style=flat-square&logo=postman&logoColor=E10600)
-![](https://img.shields.io/badge/Figma-070707?style=flat-square&logo=figma&logoColor=E10600)
-![](https://img.shields.io/badge/Docker-070707?style=flat-square&logo=docker&logoColor=E10600)
-![](https://img.shields.io/badge/Linux-070707?style=flat-square&logo=linux&logoColor=E10600)
-
----
-
-### `05://NUMBERS`
+## `04://STACK`
 
 <div align="center">
+<img src="https://skillicons.dev/icons?i=flutter,dart,js,python,java,html,css&theme=dark" alt="" />
+<br />
+<img src="https://skillicons.dev/icons?i=react,nodejs,express,bootstrap,mongodb,mysql,firebase&theme=dark" alt="" />
+<br />
+<img src="https://skillicons.dev/icons?i=git,github,vscode,androidstudio,postman,figma,docker,linux&theme=dark" alt="" />
+</div>
 
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=Vaishnavcibu&show_icons=true&hide_border=true&bg_color=070707&title_color=E10600&icon_color=E10600&text_color=F2EFE9&ring_color=E10600" alt="" />
-<img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Vaishnavcibu&layout=compact&hide_border=true&langs_count=8&bg_color=070707&title_color=E10600&text_color=F2EFE9" alt="" />
-
-<img src="https://streak-stats.demolab.com?user=Vaishnavcibu&hide_border=true&background=070707&stroke=E1060044&ring=E10600&fire=E10600&currStreakLabel=E10600&sideLabels=F2EFE9&currStreakNum=F2EFE9&sideNums=F2EFE9&dates=6E6E6E" alt="" />
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Vaishnavcibu&bg_color=070707&color=F2EFE9&title_color=E10600&line=E10600&point=E10600&area=true&hide_border=true" alt="" />
-
+<div align="center">
+<img src="https://img.shields.io/badge/OpenAI_APIs-070707?style=flat-square&logo=openai&logoColor=E10600" alt="" />
+<img src="https://img.shields.io/badge/LLMs-070707?style=flat-square&logoColor=E10600" alt="" />
+<img src="https://img.shields.io/badge/OCR-070707?style=flat-square&logoColor=E10600" alt="" />
+<img src="https://img.shields.io/badge/Computer_Vision-070707?style=flat-square&logo=opencv&logoColor=E10600" alt="" />
+<img src="https://img.shields.io/badge/Prompt_Engineering-070707?style=flat-square&logoColor=E10600" alt="" />
+<img src="https://img.shields.io/badge/Automation-070707?style=flat-square&logoColor=E10600" alt="" />
 </div>
 
 ---
 
-### `06://PROCESS`
+## `05://NUMBERS`
+
+<div align="center">
+<img height="165" src="https://github-readme-stats.vercel.app/api?username=Vaishnavcibu&show_icons=true&hide_border=true&bg_color=070707&title_color=E10600&icon_color=E10600&text_color=F2EFE9&ring_color=E10600" alt="" />
+<img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Vaishnavcibu&layout=compact&hide_border=true&langs_count=8&bg_color=070707&title_color=E10600&text_color=F2EFE9" alt="" />
+</div>
+
+<div align="center">
+<img src="https://streak-stats.demolab.com?user=Vaishnavcibu&hide_border=true&background=070707&stroke=E10600&ring=E10600&fire=E10600&currStreakLabel=E10600&sideLabels=F2EFE9&currStreakNum=F2EFE9&sideNums=F2EFE9&dates=6E6E6E" alt="" />
+</div>
+
+<div align="center">
+<img src="https://github-profile-trophy.vercel.app/?username=Vaishnavcibu&theme=darkhub&no-frame=true&no-bg=true&column=7&margin-w=6&margin-h=6" alt="" />
+</div>
+
+<div align="center">
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Vaishnavcibu&bg_color=070707&color=F2EFE9&title_color=E10600&line=E10600&point=E10600&area=true&area_color=E10600&hide_border=true" alt="" />
+</div>
+
+---
+
+## `06://PROCESS`
 
 `01 DISCOVERY` → `02 PRODUCT DESIGN` → `03 DEVELOPMENT` → `04 DEPLOYMENT` → `05 CONTINUOUS IMPROVEMENT`
 
@@ -130,24 +106,16 @@ Discovery before design, design before code, and improvement that never really s
 
 ---
 
-### `07://CONTACT`
+## `07://CONTACT`
 
 <div align="center">
-
-**Let's build something extraordinary.**
-
-[![](https://img.shields.io/badge/EMAIL-E10600?style=for-the-badge&logo=gmail&logoColor=white&labelColor=E10600)](mailto:vaishnavcibu@gmail.com)
-[![](https://img.shields.io/badge/LINKEDIN-070707?style=for-the-badge&logo=linkedin&logoColor=E10600&labelColor=070707)](https://www.linkedin.com/in/vaishnav-cibu-5766b2278/)
-[![](https://img.shields.io/badge/GITHUB-070707?style=for-the-badge&logo=github&logoColor=E10600&labelColor=070707)](https://github.com/Vaishnavcibu)
-
-<sub>FOUNDER · COREZENTRIC TECHNOLOGIES LLP · KERALA, INDIA</sub>
-
+<b>Let's build something extraordinary.</b>
+<br /><br />
+<a href="mailto:vaishnavcibu@gmail.com"><img src="https://img.shields.io/badge/EMAIL-E10600?style=for-the-badge&logo=gmail&logoColor=white&labelColor=E10600" alt="" /></a>
+<a href="https://www.linkedin.com/in/vaishnav-cibu-5766b2278/"><img src="https://img.shields.io/badge/LINKEDIN-070707?style=for-the-badge&logo=linkedin&logoColor=E10600&labelColor=070707" alt="" /></a>
+<a href="https://github.com/Vaishnavcibu"><img src="https://img.shields.io/badge/GITHUB-070707?style=for-the-badge&logo=github&logoColor=E10600&labelColor=070707" alt="" /></a>
 </div>
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+
+<div align="center">
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:E10600,100:070707&height=90&section=footer&text=FOUNDER%20%C2%B7%20COREZENTRIC%20TECHNOLOGIES%20LLP&fontSize=15&fontColor=F2EFE9&fontAlignY=62" width="100%" />
+</div>
