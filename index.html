@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vaishnav Cibu — Software Engineer / AI Product Builder / Startup Founder</title>
 <meta name="description" content="Vaishnav Cibu builds AI-powered applications, enterprise software, SaaS platforms and scalable web systems that create measurable business impact.">
 <meta name="theme-color" content="#070707">
+<meta name="google-site-verification" content="QfD8-hXDcoRiZ_J86C_ccERB_EyVwAxARCp3KXjUYmk" />
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Vaishnav Cibu — Software Engineer / AI Product Builder / Startup Founder">
@@ -52,6 +53,63 @@ button,input,textarea{font:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
 
 html{scroll-behavior:smooth}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@supports (padding:max(0px)){
+  .wrap,.nav__in,.menu__in{
+    padding-left:max(var(--gut),env(safe-area-inset-left));
+    padding-right:max(var(--gut),env(safe-area-inset-right));
+  }
+  .foot{padding-bottom:max(30px,env(safe-area-inset-bottom))}
+}
+
+@media (max-width:900px){
+  .band{padding:clamp(48px,7vw,96px) 0}
+  .band--tight{padding:36px 0}
+  .grain{display:none}
+  .hero__glow{height:360px}
+  .shead{padding-bottom:26px}
+  .h-xl{font-size:clamp(2rem,8.4vw,3.4rem)}
+  .h-lg{font-size:clamp(1.7rem,7vw,2.6rem)}
+  .h-md{font-size:clamp(1.1rem,4.6vw,1.5rem)}
+  .lede{font-size:15px;line-height:1.6}
+  .ticker{padding:11px 0}
+  .ticker__track span{font-size:12px;padding:0 16px;gap:16px}
+  .card{min-height:0;padding:22px 20px 26px}
+  .why__c{min-height:0;padding:20px 18px 24px}
+  .stat{padding:26px 20px}
+  .stat__v{font-size:clamp(2.4rem,13vw,3.4rem)}
+  .spec__l,.spec__r{padding:20px 18px 24px}
+  .contact__l{padding:26px 0}
+  .contact__r{padding:26px 0}
+  .clines{margin-top:18px}
+  .steps .step{padding:18px 0}
+  .foot__in{justify-content:flex-start;gap:10px 18px}
+  /* 16px stops iOS zooming the page when a field is focused */
+  .field input,.field textarea{font-size:16px}
+}
+
+@media (max-width:640px){
+  .hero__acts{flex-direction:column;align-items:stretch}
+  .btn{width:100%;justify-content:space-between;padding:16px 20px}
+  .hero__role{gap:6px 12px;font-size:10px}
+  .hero__meta dd{font-size:13px}
+  .hero__meta div{padding:12px 14px}
+  .menu a{font-size:clamp(1.5rem,9vw,2.6rem);gap:12px}
+  .cline{flex-wrap:wrap;gap:2px 12px;padding:14px 0}
+  .cline__v{font-size:1rem;width:100%}
+  .spec__no{width:44px;font-size:12px}
+  .spec__ttl{padding:14px 16px;gap:8px}
+  .brand__txt{font-size:12px;letter-spacing:.06em}
+}
+
+@media (max-height:520px) and (orientation:landscape){
+  .menu__in{justify-content:flex-start;padding-top:14px;padding-bottom:14px}
+  .menu a{font-size:1.35rem;padding:9px 0}
+}
+
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
 
 body{
@@ -122,7 +180,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 .eyebrow::before{content:"";width:16px;height:1px;background:var(--red)}
 
-h1,h2,h3,h4,.dsp{font-family:var(--d);font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:-.02em}
+h1,h2,h3,h4,.dsp{font-family:var(--d);font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:-.02em;overflow-wrap:break-word}
 
 .h-xl{font-size:clamp(2.6rem,7vw,6.2rem)}
 .h-lg{font-size:clamp(2rem,4.6vw,4rem)}
@@ -211,7 +269,7 @@ body.menu-open .burger__ico i:nth-child(3){transform:translateY(-5px) rotate(-45
   display:flex;flex-direction:column;padding-top:var(--nav);
 }
 body.menu-open .menu{clip-path:inset(0 0 0 0)}
-.menu__in{max-width:var(--maxw);margin:0 auto;width:100%;padding:0 var(--gut);flex:1;display:flex;flex-direction:column;justify-content:center}
+.menu__in{max-width:var(--maxw);margin:0 auto;width:100%;padding:0 var(--gut);flex:1;display:flex;flex-direction:column;justify-content:center;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .menu a{
   display:flex;align-items:baseline;gap:20px;padding:clamp(10px,1.6vw,20px) 0;
   border-top:1px solid var(--hair-soft);font-family:var(--d);font-weight:800;text-transform:uppercase;
