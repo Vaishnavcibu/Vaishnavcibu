@@ -1,23 +1,18 @@
-> Save this file in your **Vaishnavcibu/Vaishnavcibu** repo at exactly this path:
->
-> `.github/workflows/snake.yml`
->
-> On GitHub: **Add file → Create new file**, type `.github/workflows/snake.yml` as the
-> filename, paste the YAML below (everything after this line), and commit.
-> Then open the **Actions** tab and click **Run workflow** once to generate it immediately.
+<div align="center">
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:070707,100:E10600&height=170&section=header&text=VAISHNAV%20CIBU&fontSize=56&fontColor=F2EFE9&fontAlignY=42&desc=SOFTWARE%20ENGINEER%20%C2%B7%20AI%20PRODUCT%20BUILDER%20%C2%B7%20STARTUP%20FOUNDER&descSize=15&descAlignY=68" width="100%" />
+</div>
 
-```yaml
-name: Generate snake
+<div align="center">
+<img src="https://readme-typing-svg.demolab.com?font=IBM+Plex+Mono&weight=500&size=18&pause=1200&color=E10600&center=true&vCenter=true&width=640&height=45&lines=Founder+%40+Corezentric+Technologies+LLP;Building+CORE+%E2%80%94+the+OS+for+OOH+advertising;I+don't+just+build+software.+I+build+products." alt="" />
+</div>
 
-on:
-  schedule:
-    - cron: "0 */12 * * *"
-  workflow_dispatch:
-  push:
-    branches:
-      - master
+<div align="center">
+<img src="https://img.shields.io/badge/KERALA,_INDIA-070707?style=for-the-badge&labelColor=070707" alt="" />
+<img src="https://img.shields.io/badge/FOUNDER-E10600?style=for-the-badge&labelColor=E10600" alt="" />
+<img src="https://img.shields.io/badge/OPEN_TO_WORK-070707?style=for-the-badge&labelColor=070707" alt="" />
+<img src="https://komarev.com/ghpvc/?username=Vaishnavcibu&color=E10600&style=for-the-badge&label=VISITS" alt="" />
+</div>
 
-<<<<<<< HEAD
 ```console
 ┌─ SYSTEM ────────────────────────────────────────────────────────┐
 │                                                                 │
@@ -155,15 +150,7 @@ LEARNING     Distributed systems · vector search · Docker in prod
 
 ---
 
-## `07://CONTRIBUTIONS`
-
-<div align="center">
-<img src="https://raw.githubusercontent.com/Vaishnavcibu/Vaishnavcibu/output/snake.svg" alt="" />
-</div>
-
----
-
-## `08://PROCESS`
+## `07://PROCESS`
 
 ```text
 01 DISCOVERY  →  02 PRODUCT DESIGN  →  03 DEVELOPMENT  →  04 DEPLOYMENT  →  05 IMPROVEMENT
@@ -173,7 +160,7 @@ Discovery before design, design before code, and improvement that never really s
 
 ---
 
-## `09://CONTACT`
+## `08://CONTACT`
 
 <div align="center">
 <b>Let's build something extraordinary.</b>
@@ -186,27 +173,3 @@ Discovery before design, design before code, and improvement that never really s
 <div align="center">
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:E10600,100:070707&height=90&section=footer&text=FOUNDER%20%C2%B7%20COREZENTRIC%20TECHNOLOGIES%20LLP&fontSize=15&fontColor=F2EFE9&fontAlignY=62" width="100%" />
 </div>
-=======
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Generate snake animation
-        uses: Platane/snk@v3
-        id: snake-gif
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/snake.svg?palette=github-dark&color_snake=#E10600&color_dots=#070707,#4a0200,#8a0300,#c40500,#E10600
-
-      - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v4
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
->>>>>>> e0d5e065b35de95db6dfd67d67c99c3058e16348
