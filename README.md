@@ -22,7 +22,7 @@
 │   PRODUCT     CORE  →  hoardgrid · hoardbook                    │
 │   STACK       flutter · node · react · mongo · openai           │
 │   LOCATION    kerala, in                            [UTC+5:30]  │
-│   STATUS      ● building — open to work                         │
+│   STATUS      ● BUILDING IMPACT.                                │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
