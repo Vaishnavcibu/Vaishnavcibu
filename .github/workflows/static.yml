@@ -33,6 +33,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Stamp CSS/JS links with this commit (cache-busting)
+        # index.html links to css/style.css?v=__BUILD__ (and the two scripts).
+        # Swapping in the commit id gives every deploy fresh file URLs, so a
+        # browser can never pair a new page with an old cached stylesheet.
+        run: sed -i "s/__BUILD__/${GITHUB_SHA::7}/g" index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

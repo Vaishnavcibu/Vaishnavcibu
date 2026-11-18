@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.2 — Deploys always load matching files (November 2026)
+
+- **Fixed: after a deploy the footer could look broken for a few minutes.**
+  GitHub Pages lets browsers reuse files for up to 10 minutes. A browser
+  could therefore load the new page with the previous, cached `style.css`,
+  which has no styles for the restored footer row and draws the wordmark in
+  black. The stylesheet and script links now carry `?v=<commit id>`, stamped
+  in by the deploy workflow, so every deploy uses fresh file URLs.
+- The footer and its wordmark animation are unchanged from 2.1.1.
+
 ## 2.1.1 — Footer restored (November 2026)
 
 - **The footer is back to its 2.0.0 design.** The markup and styles are

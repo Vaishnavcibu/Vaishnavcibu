@@ -62,7 +62,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap"></noscript>
 
-<link rel="stylesheet" href="css/style.css">
+<!-- The ?v= placeholder on the stylesheet and script links is replaced with
+     the commit id on every deploy (.github/workflows/static.yml), so browsers
+     always load the files that belong to this exact version of the page.
+     Leave the placeholders as they are. -->
+<link rel="stylesheet" href="css/style.css?v=__BUILD__">
 
 <!-- Animation libraries (deferred, so they never block the first paint).
      If the CDN is unreachable the page still works: js/motion.js simply
@@ -71,8 +75,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
-<script src="js/main.js" defer></script>
-<script src="js/motion.js" defer></script>
+<script src="js/main.js?v=__BUILD__" defer></script>
+<script src="js/motion.js?v=__BUILD__" defer></script>
 </head>
 <body>
 
