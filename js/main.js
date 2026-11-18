@@ -12,6 +12,8 @@
    08 Custom cursor
    09 Contact form
    10 Footer year
+   11 Toolkit filter
+   12 Why panels
    ========================================================================= */
 (function () {
   'use strict';
@@ -219,7 +221,7 @@
     document.addEventListener('mouseover', function (e) {
       var t = e.target;
       cursor.classList.toggle('is-text', !!t.closest('input, textarea'));
-      cursor.classList.toggle('is-hover', !!t.closest('a, button, label, .svc, .why__card'));
+      cursor.classList.toggle('is-hover', !!t.closest('a, button, label, .svc, .why__item, .el__in, .work__card'));
     });
     document.documentElement.addEventListener('mouseleave', function () {
       cursor.classList.remove('is-visible');
@@ -300,4 +302,58 @@
      ----------------------------------------------------------------------- */
   var yr = $('#yr');
   if (yr) yr.textContent = new Date().getFullYear();
+
+
+  /* -----------------------------------------------------------------------
+     11 · TOOLKIT FILTER — highlights one discipline. js/motion.js listens
+     for "kit:filter" and animates the change with anime.js.
+     ----------------------------------------------------------------------- */
+  var kit = $('[data-kit]');
+  if (kit) {
+    var kitBtns = $$('.kit__f', kit);
+    var kitTiles = $$('.el', kit);
+    var kitStatus = $('.kit__status', kit);
+    var kitNames = { lang: 'Languages', frame: 'Frameworks', data: 'Databases', ai: 'AI & Machine Learning', tools: 'Tools' };
+    kitBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var f = btn.getAttribute('data-f');
+        kitBtns.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        var n = 0;
+        kitTiles.forEach(function (t) {
+          var match = f === 'all' || t.getAttribute('data-c') === f;
+          t.classList.toggle('is-dim', !match);
+          if (match) n++;
+        });
+        if (kitStatus) kitStatus.textContent = f === 'all' ? 'Showing all ' + n + ' tools' : 'Highlighting ' + n + ' · ' + kitNames[f];
+        kit.dispatchEvent(new CustomEvent('kit:filter', { detail: { filter: f } }));
+      });
+    });
+  }
+
+
+  /* -----------------------------------------------------------------------
+     12 · WHY PANELS — hovering or focusing a panel expands it (desktop CSS)
+     ----------------------------------------------------------------------- */
+  var why = $('[data-why]');
+  if (why) {
+    var whyItems = $$('.why__item', why);
+    var activate = function (item) {
+      if (item.classList.contains('is-active')) return;
+      whyItems.forEach(function (it) { it.classList.toggle('is-active', it === item); });
+      why.dispatchEvent(new CustomEvent('why:change', { detail: { item: item } }));
+    };
+    // Real pointer movement only: when a panel expands, the panel under a
+    // resting mouse changes, and a plain mouseenter would bounce between them.
+    whyItems.forEach(function (it) {
+      it.addEventListener('pointermove', function (e) {
+        if (e.pointerType === 'mouse' && (e.movementX || e.movementY)) activate(it);
+      });
+      it.addEventListener('click', function () { activate(it); });
+      it.addEventListener('focusin', function () { activate(it); });
+    });
+  }
 })();

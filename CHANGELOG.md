@@ -1,5 +1,88 @@
 # Changelog
 
+## 2.1.0 — Laptop layout fix, motion, section upgrades (November 2026)
+
+### Fixed
+- **Hero broke on laptop screens.** On a typical laptop (for example
+  1920×1080 at 125% scaling, which gives a 1536×695 browser window) the hero
+  needed about 800px of height but the frame was capped at the screen height,
+  so the headline spilled out below the white frame. The frame now always
+  grows with its content, and from 1200px wide the copy sits beside the
+  Corezentric card instead of on top of the headline, with the headline
+  sized from the screen height. The whole hero now fits in one screen at
+  1280×600, 1366×625, 1536×695, 1440×900, 1920×950 and 2560×1300, with
+  both headline variants.
+- **Nav lost its blur once you scrolled.** The nav's entrance animation was
+  held after it finished (`fill-mode: both`), which turns off
+  `backdrop-filter` in Chrome. It now releases when done (`backwards`), and the
+  floating bar is a little more opaque.
+- **Scrollbars.** The default light page scrollbar is replaced with a slim
+  dark one that matches the site, the mobile menu's scrollbar is hidden, and
+  no element on the page shows its own scrollbar or scrolls sideways.
+
+### Hero
+- Hotspots are pinned to points on the orb's surface, so they move with it
+  at every screen size instead of drifting onto the copy or the cut-outs.
+- The tagline headline ("I build products that ship") stays on one line on
+  tablets, and its hotspots move to the free space beside the orb.
+
+### Motion (GSAP 3.13 + ScrollTrigger, anime.js 3.2.2, loaded from cdnjs)
+- All motion lives in `js/motion.js`. If the CDN is unreachable, or the
+  visitor has asked for reduced motion, the page stays fully readable and
+  static. Loops pause when they are off screen.
+- Headings rise out of a mask as they scroll into view.
+- Scroll parallax in the hero, and marquees that speed up while you scroll
+  (desktop).
+- Magnetic primary buttons, a red spotlight that follows the cursor on cards,
+  and a 3D tilt on the About ID card (desktop, mouse only).
+
+### Sections
+- **01 About**, redesigned: a framed "ID card" (sticky on desktop, tilts toward
+  the cursor) next to a story column with:
+  - a manifesto whose words light up as you read;
+  - a journey path that draws itself;
+  - the belief as a large quote;
+  - the focus areas as big interactive rows.
+
+  All of the original text is kept.
+- **04 Selected work:** stacked cards. On desktop each card sticks under the
+  nav, and the next one slides over it while the covered one shrinks and dims.
+  Each project has its own animated line illustration until a screenshot is
+  added.
+- **05 Toolkit:** a "periodic table" of all 30 skills, filterable by discipline.
+  The tiles ripple in from the centre and re-sort with a stagger (anime.js).
+- **06 Process:**
+  - Desktop: the section pins and the five stages travel sideways as you
+    scroll, with a progress counter. The current stage turns into a white
+    spotlight card and its icon draws itself.
+  - Phones: a rail that fills as you scroll.
+- **07 Why work with me:** expanding panels. The one you hover, tap or focus
+  with the keyboard opens and shows its text; phones show all five as cards.
+- **09 Vision and 10 Contact are unchanged**, as requested.
+
+### Footer finale (scroll-synchronised)
+1. A white sheet rises from below the page with the copyright on it.
+2. Red floods up from the bottom and blends the white away, while the
+   copyright fades and sinks downward. The nav slides out of the way.
+3. The giant "VAISHNAV CIBU" wordmark rises onto the red.
+
+Scrolling back up plays it in reverse. With reduced motion it is a static
+white footer. "All rights reserved." was added to the copyright line.
+
+### Checked
+- No horizontal scroll and no console errors at 375, 768, 1024, 1440 and
+  1536 px. Every in-page link resolves, there is one `h1`, and there are no
+  duplicate IDs.
+
+| Lighthouse | Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|---|
+| Mobile (local, gzip; median of alternating A/B runs) | 94 | 100 | 100 | 100 |
+| Desktop | 99 | 100 | 100 | 100 |
+
+In the same A/B runs the previous version (2.0.0) scored a median of 92 on
+mobile, so the animation layer costs no measurable performance. Single runs
+on a busy machine can dip much lower.
+
 ## 2.0.0 — Redesign (November 2026)
 
 A full visual redesign. All existing copy, contact details and links are kept;

@@ -22,8 +22,11 @@ edge. In `index.html`, find `PORTRAIT SLOT` and uncomment the `<picture>`. The
 red orb hides itself; the red glow stays behind you as a back-light.
 
 **Project screenshots.** In each project card, uncomment the `<img>` under the
-placeholder. The outline lettering is covered automatically. Crop to 16:10;
-browser chrome is optional.
+illustration (`<svg class="art …">`). The screenshot covers the animated
+illustration automatically, and the illustration's animation is skipped.
+Crop to 16:10; browser chrome is optional. On desktop the image fills the
+right-hand side of the card, so keep the important part of the screenshot
+away from the edges.
 
 **CV.** In the hero's bottom-right card (`hero__br`), set `href="assets/cv.pdf"`,
 add the `download` attribute, and change the pill text from `View Work` to

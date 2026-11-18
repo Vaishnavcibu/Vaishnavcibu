@@ -52,8 +52,9 @@
 }
 </script>
 
-<!-- Flag JS early so reveal states never hide content when JS is off -->
-<script>document.documentElement.classList.add('js');</script>
+<!-- Flag JS early so reveal states never hide content when JS is off.
+     "motion-ok" = the visitor has not asked for reduced motion. -->
+<script>(function(d){d.classList.add('js');try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion-ok')}catch(e){}})(document.documentElement);</script>
 
 <!-- Fonts: Anton (display) · Outfit (body/UI) · JetBrains Mono (section tags). Non-blocking, font-display: swap -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +63,16 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap"></noscript>
 
 <link rel="stylesheet" href="css/style.css">
+
+<!-- Animation libraries (deferred, so they never block the first paint).
+     If the CDN is unreachable the page still works: js/motion.js simply
+     skips the enhanced animations and every section stays readable. -->
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
 <script src="js/main.js" defer></script>
+<script src="js/motion.js" defer></script>
 </head>
 <body>
 
@@ -182,19 +192,20 @@
           <p class="hero__lede">From AI-powered applications and enterprise software to SaaS platforms and scalable web systems, I combine engineering, design and business thinking to create products that people actually use.</p>
         </div>
 
-        <!-- Hotspot callouts: position with --x / --y (percent of the panel) -->
+        <!-- Hotspot callouts. On wide screens they are pinned to points on the
+             orb's surface (see "Hotspot positions" in css/style.css). -->
         <ul class="hotspots" aria-label="Quick facts">
-          <li class="hotspot" style="--x:70%;--y:36%;--i:0">
+          <li class="hotspot" style="--i:0">
             <span class="hotspot__dot" aria-hidden="true"></span>
             <span class="hotspot__line" aria-hidden="true"></span>
             <span class="hotspot__text"><span class="hotspot__k">Products shipped</span> <span class="hotspot__v" data-stat-text="shipped">10+</span></span>
           </li>
-          <li class="hotspot hotspot--left" style="--x:41%;--y:27%;--i:1">
+          <li class="hotspot hotspot--left" style="--i:1">
             <span class="hotspot__dot" aria-hidden="true"></span>
             <span class="hotspot__line" aria-hidden="true"></span>
             <span class="hotspot__text"><span class="hotspot__k">Based in</span> <span class="hotspot__v">Kerala, IN</span></span>
           </li>
-          <li class="hotspot" style="--x:64%;--y:68%;--i:2">
+          <li class="hotspot" style="--i:2">
             <span class="hotspot__dot" aria-hidden="true"></span>
             <span class="hotspot__line" aria-hidden="true"></span>
             <span class="hotspot__text"><span class="hotspot__k">Focus</span> <span class="hotspot__v">AI &amp; Product</span></span>
@@ -275,25 +286,64 @@
     <header class="shead">
       <div>
         <p class="kicker" data-rv><span class="kicker__tag">01://ABOUT</span><span class="kicker__label">About me</span></p>
-        <h2 class="display shead__title" id="about-title" data-rv style="--d:1">Turning ideas into scalable products</h2>
+        <h2 class="display shead__title" id="about-title" data-rv="head">Turning ideas into scalable products</h2>
       </div>
       <p class="shead__lede" data-rv style="--d:2">I'm a software developer, entrepreneur and product builder who likes hard problems and finished work.</p>
     </header>
 
     <div class="about">
-      <div class="card about__card" data-rv>
-        <p class="about__big">My journey started with curiosity about programming, but it quickly turned into building complete digital products — from backend architecture and mobile applications to AI-powered solutions and enterprise software.</p>
-        <p class="muted">I believe great software isn't defined by elegant code alone. It's measured by the value it creates for users and businesses.</p>
-      </div>
-      <div class="card about__card" data-rv style="--d:1">
-        <p>Today I focus on designing scalable systems, AI integrations, cloud infrastructure and user-first applications that help businesses grow.</p>
-        <ul class="pills" aria-label="Focus areas">
-          <li class="pill pill--outline">Scalable systems</li>
-          <li class="pill pill--outline">AI integration</li>
-          <li class="pill pill--outline">Cloud infrastructure</li>
-          <li class="pill pill--outline">Product design</li>
-          <li class="pill pill--outline">MVP → Production</li>
-        </ul>
+      <!-- Left: framed ID card (sticky on desktop). The orb follows the pointer. -->
+      <aside class="about__id" aria-label="Profile">
+        <div class="frame about__frame" data-rv>
+          <div class="about__panel" data-tilt>
+            <div class="cut cut--tl cut--pill about__status">
+              <p class="tile tile--status tile--static"><span class="live-dot" aria-hidden="true"></span>Open to work</p>
+            </div>
+            <span class="about__idno" aria-hidden="true">ID://VC-01</span>
+            <div class="about__stage" aria-hidden="true">
+              <span class="about__beam"></span>
+              <span class="about__glow"></span>
+              <span class="about__ring"></span>
+              <span class="about__orb" data-orb></span>
+            </div>
+            <p class="about__mono" aria-hidden="true">VC<span>.</span></p>
+            <dl class="about__facts">
+              <div><dt>Name</dt><dd>Vaishnav Cibu</dd></div>
+              <div><dt>Based in</dt><dd>Kerala, India</dd></div>
+              <div class="about__facts-wide"><dt>Role</dt><dd>Software Engineer<span class="sep" aria-hidden="true"></span>AI Product Builder<span class="sep" aria-hidden="true"></span>Startup Founder</dd></div>
+              <div class="about__facts-wide"><dt>Company</dt><dd>Corezentric Technologies LLP</dd></div>
+            </dl>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right: the story -->
+      <div class="about__story">
+        <p class="about__manifesto" data-words>My journey started with curiosity about programming, but it quickly turned into building complete digital products — from backend architecture and mobile applications to AI-powered solutions and enterprise software.</p>
+
+        <!-- Visual summary of the sentence above (decorative, so hidden from screen readers) -->
+        <ol class="about__path" aria-hidden="true">
+          <li><span>01</span>Backend architecture<i></i></li>
+          <li><span>02</span>Mobile applications<i></i></li>
+          <li><span>03</span>AI-powered solutions<i></i></li>
+          <li><span>04</span>Enterprise software<i></i></li>
+        </ol>
+
+        <figure class="about__quote" data-rv>
+          <span class="about__qmark" aria-hidden="true">&ldquo;</span>
+          <blockquote><p>I believe great software isn't defined by elegant code alone. It's measured by the value it creates for users and businesses.</p></blockquote>
+        </figure>
+
+        <div class="about__focus">
+          <p class="about__today" data-rv>Today I focus on designing scalable systems, AI integrations, cloud infrastructure and user-first applications that help businesses grow.</p>
+          <ul class="about__list" aria-label="Focus areas">
+            <li data-rv><span class="about__li-no">01</span><span class="about__li-name">Scalable systems</span><span class="about__li-ico" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></li>
+            <li data-rv style="--d:1"><span class="about__li-no">02</span><span class="about__li-name">AI integration</span><span class="about__li-ico" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></li>
+            <li data-rv style="--d:2"><span class="about__li-no">03</span><span class="about__li-name">Cloud infrastructure</span><span class="about__li-ico" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></li>
+            <li data-rv style="--d:3"><span class="about__li-no">04</span><span class="about__li-name">Product design</span><span class="about__li-ico" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></li>
+            <li data-rv style="--d:4"><span class="about__li-no">05</span><span class="about__li-name">MVP → Production</span><span class="about__li-ico" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -307,7 +357,7 @@
     <header class="shead">
       <div>
         <p class="kicker" data-rv><span class="kicker__tag">02://COMPANY</span><span class="kicker__label">The company</span></p>
-        <h2 class="display shead__title" id="company-title" data-rv style="--d:1">Corezentric<br>Technologies LLP</h2>
+        <h2 class="display shead__title" id="company-title" data-rv="head">Corezentric<br>Technologies LLP</h2>
       </div>
       <p class="shead__lede" data-rv style="--d:2">Corezentric builds CORE &mdash; an OOH advertising platform for hoarding and digital-billboard operators in Kerala, replacing spreadsheet guesswork with real inventory, campaign, and billing management.</p>
     </header>
@@ -377,13 +427,13 @@
     <header class="shead">
       <div>
         <p class="kicker" data-rv><span class="kicker__tag">03://SERVICES</span><span class="kicker__label">What I do</span></p>
-        <h2 class="display shead__title" id="services-title" data-rv style="--d:1">Six ways I ship</h2>
+        <h2 class="display shead__title" id="services-title" data-rv="head">Six ways I ship</h2>
       </div>
       <p class="shead__lede" data-rv style="--d:2">Every engagement runs end to end — architecture, interface, deployment and the iteration after launch.</p>
     </header>
 
     <div class="services">
-      <article class="svc" id="svc-ai" data-rv>
+      <article class="svc" id="svc-ai" data-glow data-rv>
         <div class="svc__top">
           <span class="svc__no" data-no="01" aria-hidden="true"></span>
           <span class="svc__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
@@ -394,7 +444,7 @@
         <ul class="pills" aria-label="Technologies"><li class="pill pill--outline pill--xs">LLMs</li><li class="pill pill--outline pill--xs">OCR</li><li class="pill pill--outline pill--xs">Vision</li><li class="pill pill--outline pill--xs">Automation</li></ul>
       </article>
 
-      <article class="svc" id="svc-fullstack" data-rv style="--d:1">
+      <article class="svc" id="svc-fullstack" data-glow data-rv style="--d:1">
         <div class="svc__top">
           <span class="svc__no" data-no="02" aria-hidden="true"></span>
           <span class="svc__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
@@ -405,7 +455,7 @@
         <ul class="pills" aria-label="Technologies"><li class="pill pill--outline pill--xs">Node.js</li><li class="pill pill--outline pill--xs">Express</li><li class="pill pill--outline pill--xs">MongoDB</li><li class="pill pill--outline pill--xs">React</li><li class="pill pill--outline pill--xs">Flutter</li><li class="pill pill--outline pill--xs">REST APIs</li></ul>
       </article>
 
-      <article class="svc" id="svc-mobile" data-rv style="--d:2">
+      <article class="svc" id="svc-mobile" data-glow data-rv style="--d:2">
         <div class="svc__top">
           <span class="svc__no" data-no="03" aria-hidden="true"></span>
           <span class="svc__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
@@ -416,7 +466,7 @@
         <ul class="pills" aria-label="Technologies"><li class="pill pill--outline pill--xs">Flutter</li><li class="pill pill--outline pill--xs">Android</li><li class="pill pill--outline pill--xs">iOS</li><li class="pill pill--outline pill--xs">Web</li></ul>
       </article>
 
-      <article class="svc" id="svc-enterprise" data-rv>
+      <article class="svc" id="svc-enterprise" data-glow data-rv>
         <div class="svc__top">
           <span class="svc__no" data-no="04" aria-hidden="true"></span>
           <span class="svc__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
@@ -427,7 +477,7 @@
         <ul class="pills" aria-label="Technologies"><li class="pill pill--outline pill--xs">ERP</li><li class="pill pill--outline pill--xs">Dashboards</li><li class="pill pill--outline pill--xs">Workflow</li></ul>
       </article>
 
-      <article class="svc" id="svc-saas" data-rv style="--d:1">
+      <article class="svc" id="svc-saas" data-glow data-rv style="--d:1">
         <div class="svc__top">
           <span class="svc__no" data-no="05" aria-hidden="true"></span>
           <span class="svc__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
@@ -438,7 +488,7 @@
         <ul class="pills" aria-label="Technologies"><li class="pill pill--outline pill--xs">MVP</li><li class="pill pill--outline pill--xs">Multi-tenant</li><li class="pill pill--outline pill--xs">Billing</li></ul>
       </article>
 
-      <article class="svc" id="svc-design" data-rv style="--d:2">
+      <article class="svc" id="svc-design" data-glow data-rv style="--d:2">
         <div class="svc__top">
           <span class="svc__no" data-no="06" aria-hidden="true"></span>
           <span class="svc__arrow" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span>
@@ -462,89 +512,155 @@
     <header class="shead">
       <div>
         <p class="kicker" data-rv><span class="kicker__tag">04://PROJECTS</span><span class="kicker__label">Featured projects</span></p>
-        <h2 class="display shead__title" id="projects-title" data-rv style="--d:1">Selected work</h2>
+        <h2 class="display shead__title" id="projects-title" data-rv="head">Selected work</h2>
       </div>
       <p class="shead__lede" data-rv style="--d:2">A selection of builds from my GitHub — from booking platforms and marketplaces to AI document tooling and a live homestay website.</p>
     </header>
 
-    <div class="projects">
-      <article class="proj proj--lg" data-rv>
-        <div class="proj__media">
-          <span class="proj__ph" data-text="Amber" aria-hidden="true"></span>
-          <!-- <img src="assets/projects/amber.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Amber ambulance booking app screenshot"> -->
-        </div>
-        <div class="proj__body">
-          <p class="label">Ambulance booking</p>
-          <h3 class="display card__title">Amber</h3>
-          <p class="proj__desc">An Uber-style booking platform for ambulances.</p>
-          <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Node.js</li><li class="pill pill--outline pill--xs">Express</li><li class="pill pill--outline pill--xs">MongoDB</li><li class="pill pill--outline pill--xs">JWT auth</li></ul>
-          <div class="proj__links">
-            <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/Amber" target="_blank" rel="noopener">Amber on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+    <!-- Stacked cards: on desktop each card sticks under the nav and the next
+         one slides over it. Each card has an animated illustration; drop a
+         screenshot in by uncommenting its <img> (it covers the illustration). -->
+    <div class="works">
+      <article class="work" style="--i:0">
+        <div class="work__card" data-glow>
+          <div class="work__info">
+            <p class="work__top"><span class="work__idx">P/01</span><span class="label">Ambulance booking</span></p>
+            <h3 class="display work__title">Amber</h3>
+            <p class="work__desc">An Uber-style booking platform for ambulances.</p>
+            <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Node.js</li><li class="pill pill--outline pill--xs">Express</li><li class="pill pill--outline pill--xs">MongoDB</li><li class="pill pill--outline pill--xs">JWT auth</li></ul>
+            <div class="work__links">
+              <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/Amber" target="_blank" rel="noopener">Amber on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+            </div>
+          </div>
+          <div class="work__media">
+            <svg class="art art--amber" viewBox="0 0 640 400" aria-hidden="true" focusable="false">
+              <g class="a-soft"><rect x="70" y="150" width="150" height="110" rx="12"/><rect x="300" y="250" width="130" height="90" rx="12"/><rect x="310" y="40" width="120" height="130" rx="12"/><rect x="500" y="160" width="100" height="170" rx="12"/><rect x="70" y="40" width="190" height="70" rx="12"/></g>
+              <path class="a-line a-dash" d="M70 310 H250 Q270 310 270 290 V230 Q270 210 290 210 H450 Q470 210 470 190 V120 Q470 100 490 100 H570"/>
+              <path class="a-red a-draw a-route" d="M70 310 H250 Q270 310 270 290 V230 Q270 210 290 210 H450 Q470 210 470 190 V120 Q470 100 490 100 H570"/>
+              <path class="a-pulse a-draw" d="M300 360 H360 L372 338 L386 382 L398 346 L406 360 H470"/>
+              <circle class="a-ring a-ping" cx="570" cy="100" r="18"/>
+              <circle class="a-rdot" cx="570" cy="100" r="8"/>
+              <circle class="a-dot" cx="70" cy="310" r="7"/>
+              <g class="a-mover"><circle class="a-rdot" r="9"/><circle class="a-dot" r="3.5"/></g>
+              <text class="a-txt" x="70" y="342" text-anchor="middle">PICKUP</text>
+              <text class="a-txt" x="570" y="70" text-anchor="middle">ARRIVAL</text>
+            </svg>
+            <!-- <img src="assets/projects/amber.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Amber ambulance booking app screenshot"> -->
           </div>
         </div>
       </article>
 
-      <article class="proj proj--lg" data-rv style="--d:1">
-        <div class="proj__media">
-          <span class="proj__ph" data-text="OCR" aria-hidden="true"></span>
-          <!-- <img src="assets/projects/schematics-ocr.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Schematic OCR Extraction Tool screenshot"> -->
-        </div>
-        <div class="proj__body">
-          <p class="label">AI document processing</p>
-          <h3 class="display card__title">Schematic OCR Tool</h3>
-          <p class="proj__desc">Extracts text from PDF schematics with Tesseract OCR and sorts it under user-defined headings with Claude.</p>
-          <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Flutter</li><li class="pill pill--outline pill--xs">Node.js</li><li class="pill pill--outline pill--xs">Tesseract OCR</li><li class="pill pill--outline pill--xs">Claude API</li><li class="pill pill--outline pill--xs">MongoDB</li></ul>
-          <div class="proj__links">
-            <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/schematics-ocr-tool" target="_blank" rel="noopener">schematics-ocr-tool on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+      <article class="work" style="--i:1">
+        <div class="work__card" data-glow>
+          <div class="work__info">
+            <p class="work__top"><span class="work__idx">P/02</span><span class="label">AI document processing</span></p>
+            <h3 class="display work__title">Schematic OCR Tool</h3>
+            <p class="work__desc">Extracts text from PDF schematics with Tesseract OCR and sorts it under user-defined headings with Claude.</p>
+            <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Flutter</li><li class="pill pill--outline pill--xs">Node.js</li><li class="pill pill--outline pill--xs">Tesseract OCR</li><li class="pill pill--outline pill--xs">Claude API</li><li class="pill pill--outline pill--xs">MongoDB</li></ul>
+            <div class="work__links">
+              <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/schematics-ocr-tool" target="_blank" rel="noopener">schematics-ocr-tool on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+            </div>
+          </div>
+          <div class="work__media">
+            <svg class="art art--ocr" viewBox="0 0 640 400" aria-hidden="true" focusable="false">
+              <g class="a-tag"><rect class="a-line" x="48" y="60" width="74" height="34" rx="17"/><text class="a-txt" x="85" y="82" text-anchor="middle">PDF</text></g>
+              <path class="a-soft" d="M122 77 H170"/>
+              <rect class="a-doc" x="170" y="36" width="270" height="328" rx="14"/>
+              <path class="a-line a-draw" d="M200 100 H250 l8 -12 l16 24 l16 -24 l16 24 l16 -24 l8 12 H410"/>
+              <path class="a-line a-draw" d="M230 100 V160 H300 M300 146 V174 M312 146 V174 M312 160 H380 V100"/>
+              <path class="a-line a-draw" d="M215 190 h40 m-30 10 h20 m-14 10 h8"/>
+              <g class="a-bars"><rect x="200" y="236" width="180" height="8" rx="4"/><rect x="200" y="258" width="130" height="8" rx="4"/><rect x="200" y="280" width="200" height="8" rx="4"/><rect x="200" y="302" width="90" height="8" rx="4"/><rect x="200" y="324" width="150" height="8" rx="4"/></g>
+              <g class="a-scan"><rect class="a-scanglow" x="170" y="0" width="270" height="44"/><rect class="a-scanline" x="170" y="42" width="270" height="2"/></g>
+              <path class="a-soft" d="M440 120 H470 M440 200 H470 M440 280 H470"/>
+              <g class="a-chip"><rect class="a-line" x="470" y="102" width="130" height="36" rx="18"/><circle class="a-rdot" cx="490" cy="120" r="4"/><text class="a-txt" x="504" y="124">HEADING</text></g>
+              <g class="a-chip"><rect class="a-line" x="470" y="182" width="130" height="36" rx="18"/><circle class="a-rdot" cx="490" cy="200" r="4"/><text class="a-txt" x="504" y="204">HEADING</text></g>
+              <g class="a-chip"><rect class="a-line" x="470" y="262" width="130" height="36" rx="18"/><circle class="a-rdot" cx="490" cy="280" r="4"/><text class="a-txt" x="504" y="284">HEADING</text></g>
+            </svg>
+            <!-- <img src="assets/projects/schematics-ocr.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Schematic OCR Extraction Tool screenshot"> -->
           </div>
         </div>
       </article>
 
-      <article class="proj" data-rv>
-        <div class="proj__media">
-          <span class="proj__ph" data-text="FES" aria-hidden="true"></span>
-          <!-- <img src="assets/projects/fes.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="FES farmer-to-market platform screenshot"> -->
-        </div>
-        <div class="proj__body">
-          <p class="label">Farmer-to-market</p>
-          <h3 class="display card__title">FES</h3>
-          <p class="proj__desc">Farmer Empowerment Solution: gives farmers direct access to the market.</p>
-          <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Node.js</li><li class="pill pill--outline pill--xs">Express</li><li class="pill pill--outline pill--xs">MongoDB</li></ul>
-          <div class="proj__links">
-            <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/FES" target="_blank" rel="noopener">FES on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+      <article class="work" style="--i:2">
+        <div class="work__card" data-glow>
+          <div class="work__info">
+            <p class="work__top"><span class="work__idx">P/03</span><span class="label">Farmer-to-market</span></p>
+            <h3 class="display work__title">FES</h3>
+            <p class="work__desc">Farmer Empowerment Solution: gives farmers direct access to the market.</p>
+            <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Node.js</li><li class="pill pill--outline pill--xs">Express</li><li class="pill pill--outline pill--xs">MongoDB</li></ul>
+            <div class="work__links">
+              <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/FES" target="_blank" rel="noopener">FES on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+            </div>
+          </div>
+          <div class="work__media">
+            <svg class="art art--fes" viewBox="0 0 640 400" aria-hidden="true" focusable="false">
+              <rect class="a-line" x="50" y="80" width="200" height="230" rx="16"/>
+              <path class="a-soft a-draw" d="M72 112 H228 M72 140 H228 M72 168 H228 M72 196 H228 M72 224 H228 M72 252 H228 M72 280 H228"/>
+              <path class="a-line a-draw" d="M96 112 v-10 M140 140 v-10 M184 168 v-10 M118 196 v-10 M206 224 v-10 M96 252 v-10 M162 280 v-10"/>
+              <path class="a-line a-dash" d="M262 196 C 320 196, 340 196, 400 196"/>
+              <g class="a-mover"><circle class="a-rdot" r="8"/><circle class="a-dot" r="3"/></g>
+              <path class="a-soft" d="M420 310 H600"/>
+              <rect class="a-bar" x="436" y="230" width="34" height="80" rx="6"/>
+              <rect class="a-bar" x="486" y="180" width="34" height="130" rx="6"/>
+              <rect class="a-bar a-bar--red" x="536" y="120" width="34" height="190" rx="6"/>
+              <path class="a-red a-draw" d="M440 214 L503 160 L553 98 L596 76"/>
+              <text class="a-txt" x="150" y="342" text-anchor="middle">FARM</text>
+              <text class="a-txt" x="510" y="342" text-anchor="middle">MARKET</text>
+            </svg>
+            <!-- <img src="assets/projects/fes.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="FES farmer-to-market platform screenshot"> -->
           </div>
         </div>
       </article>
 
-      <article class="proj" data-rv style="--d:1">
-        <div class="proj__media">
-          <span class="proj__ph" data-text="SPF" aria-hidden="true"></span>
-          <!-- <img src="assets/projects/spf.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="SPF study partner finder screenshot"> -->
-        </div>
-        <div class="proj__body">
-          <p class="label">Study partner finder</p>
-          <h3 class="display card__title">SPF</h3>
-          <p class="proj__desc">Matches students with study partners, backed by a MySQL database.</p>
-          <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Java</li><li class="pill pill--outline pill--xs">MySQL</li><li class="pill pill--outline pill--xs">JDBC</li></ul>
-          <div class="proj__links">
-            <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/SPF" target="_blank" rel="noopener">SPF on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+      <article class="work" style="--i:3">
+        <div class="work__card" data-glow>
+          <div class="work__info">
+            <p class="work__top"><span class="work__idx">P/04</span><span class="label">Study partner finder</span></p>
+            <h3 class="display work__title">SPF</h3>
+            <p class="work__desc">Matches students with study partners, backed by a MySQL database.</p>
+            <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">Java</li><li class="pill pill--outline pill--xs">MySQL</li><li class="pill pill--outline pill--xs">JDBC</li></ul>
+            <div class="work__links">
+              <a class="pill pill--white pill--sm pill--icon" href="https://github.com/Vaishnavcibu/SPF" target="_blank" rel="noopener">SPF on GitHub<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+            </div>
+          </div>
+          <div class="work__media">
+            <svg class="art art--spf" viewBox="0 0 640 400" aria-hidden="true" focusable="false">
+              <path class="a-soft" d="M100 120 L250 90 L320 210 L180 280 Z M250 90 L440 110 L320 210 L400 320 L180 280 M440 110 L560 90 L520 230 L400 320 M440 110 L520 230 M320 210 L520 230 M100 120 L180 280"/>
+              <path class="a-red" d="M180 280 C 300 380, 430 350, 520 230"/>
+              <circle class="a-node" cx="100" cy="120" r="9"/><circle class="a-node" cx="250" cy="90" r="9"/><circle class="a-node" cx="320" cy="210" r="9"/>
+              <circle class="a-node" cx="440" cy="110" r="9"/><circle class="a-node" cx="560" cy="90" r="9"/><circle class="a-node" cx="400" cy="320" r="9"/>
+              <circle class="a-ring a-ping" cx="180" cy="280" r="20"/><circle class="a-dot" cx="180" cy="280" r="11"/>
+              <circle class="a-ring a-ping a-ping--late" cx="520" cy="230" r="20"/><circle class="a-rdot" cx="520" cy="230" r="11"/>
+              <text class="a-txt" x="350" y="372" text-anchor="middle">MATCH</text>
+            </svg>
+            <!-- <img src="assets/projects/spf.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="SPF study partner finder screenshot"> -->
           </div>
         </div>
       </article>
 
-      <article class="proj" data-rv style="--d:2">
-        <div class="proj__media">
-          <span class="proj__ph" data-text="Nest" aria-hidden="true"></span>
-          <!-- <img src="assets/projects/wooden-nest.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Wooden Nest homestay website screenshot"> -->
-        </div>
-        <div class="proj__body">
-          <p class="label">Homestay website</p>
-          <h3 class="display card__title">Wooden Nest</h3>
-          <p class="proj__desc">Website for a forest-side homestay in Aruvithura, Kerala, with 3 BHK and 4 BHK stay pages.</p>
-          <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">HTML</li><li class="pill pill--outline pill--xs">CSS</li><li class="pill pill--outline pill--xs">JavaScript</li><li class="pill pill--outline pill--xs">GitHub Pages</li></ul>
-          <div class="proj__links">
-            <a class="pill pill--white pill--sm pill--icon" href="https://woodenest.in/" target="_blank" rel="noopener">Visit woodenest.in<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
-            <a class="pill pill--dark pill--sm" href="https://github.com/Vaishnavcibu/Wooden_nest_website" target="_blank" rel="noopener">Wooden Nest on GitHub</a>
+      <article class="work" style="--i:4">
+        <div class="work__card" data-glow>
+          <div class="work__info">
+            <p class="work__top"><span class="work__idx">P/05</span><span class="label">Homestay website</span></p>
+            <h3 class="display work__title">Wooden Nest</h3>
+            <p class="work__desc">Website for a forest-side homestay in Aruvithura, Kerala, with 3 BHK and 4 BHK stay pages.</p>
+            <ul class="pills" aria-label="Stack"><li class="pill pill--outline pill--xs">HTML</li><li class="pill pill--outline pill--xs">CSS</li><li class="pill pill--outline pill--xs">JavaScript</li><li class="pill pill--outline pill--xs">GitHub Pages</li></ul>
+            <div class="work__links">
+              <a class="pill pill--white pill--sm pill--icon" href="https://woodenest.in/" target="_blank" rel="noopener">Visit woodenest.in<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+              <a class="pill pill--dark pill--sm" href="https://github.com/Vaishnavcibu/Wooden_nest_website" target="_blank" rel="noopener">Wooden Nest on GitHub</a>
+            </div>
+          </div>
+          <div class="work__media">
+            <svg class="art art--nest" viewBox="0 0 640 400" aria-hidden="true" focusable="false">
+              <circle class="a-line" cx="540" cy="78" r="24"/>
+              <path class="a-line a-draw" d="M50 310 L90 190 L130 310 M110 310 L160 150 L210 310 M430 310 L470 200 L510 310 M480 310 L530 140 L580 310 M560 310 L590 230 L615 310"/>
+              <path class="a-soft" d="M30 310 H620"/>
+              <path class="a-line a-draw" d="M248 222 L320 160 L392 222 M262 212 V310 H378 V212 M306 310 V262 H334 V310"/>
+              <rect class="a-window" x="276" y="234" width="22" height="20" rx="3"/>
+              <rect class="a-window a-window--dim" x="342" y="234" width="22" height="20" rx="3"/>
+              <text class="a-txt" x="320" y="350" text-anchor="middle">WOODENEST.IN</text>
+            </svg>
+            <!-- <img src="assets/projects/wooden-nest.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Wooden Nest homestay website screenshot"> -->
           </div>
         </div>
       </article>
@@ -564,32 +680,58 @@
     <header class="shead">
       <div>
         <p class="kicker" data-rv><span class="kicker__tag">05://STACK</span><span class="kicker__label">Technical skills</span></p>
-        <h2 class="display shead__title" id="stack-title" data-rv style="--d:1">The toolkit</h2>
+        <h2 class="display shead__title" id="stack-title" data-rv="head">The toolkit</h2>
       </div>
       <p class="shead__lede" data-rv style="--d:2">Languages, frameworks and infrastructure I use daily — chosen for what the product needs, not for what's trending.</p>
     </header>
 
-    <div class="card stack">
-      <div class="stack__row" data-rv>
-        <h3 class="stack__title"><span class="stack__code">01 / LANG</span>Languages</h3>
-        <ul class="pills"><li class="pill pill--outline">Java</li><li class="pill pill--outline">JavaScript</li><li class="pill pill--outline">Python</li><li class="pill pill--outline">Dart</li><li class="pill pill--outline">HTML</li><li class="pill pill--outline">CSS</li><li class="pill pill--outline">SQL</li></ul>
+    <!-- "Periodic table" of skills. The filter buttons highlight one
+         discipline; every tile stays in the page for screen readers. -->
+    <div class="kit" data-kit>
+      <div class="kit__bar" data-rv>
+        <div class="kit__filters" role="group" aria-label="Highlight a discipline">
+          <button type="button" class="kit__f is-active" data-f="all" aria-pressed="true">All <span class="kit__n">30</span></button>
+          <button type="button" class="kit__f" data-f="lang" aria-pressed="false"><span class="kit__code">01</span>Languages <span class="kit__n">07</span></button>
+          <button type="button" class="kit__f" data-f="frame" aria-pressed="false"><span class="kit__code">02</span>Frameworks <span class="kit__n">05</span></button>
+          <button type="button" class="kit__f" data-f="data" aria-pressed="false"><span class="kit__code">03</span>Databases <span class="kit__n">04</span></button>
+          <button type="button" class="kit__f" data-f="ai" aria-pressed="false"><span class="kit__code">04</span>AI &amp; Machine Learning <span class="kit__n">06</span></button>
+          <button type="button" class="kit__f" data-f="tools" aria-pressed="false"><span class="kit__code">05</span>Tools <span class="kit__n">08</span></button>
+        </div>
+        <p class="kit__status" aria-live="polite">Showing all 30 tools</p>
       </div>
-      <div class="stack__row" data-rv style="--d:1">
-        <h3 class="stack__title"><span class="stack__code">02 / FRAME</span>Frameworks</h3>
-        <ul class="pills"><li class="pill pill--outline">Flutter</li><li class="pill pill--outline">Node.js</li><li class="pill pill--outline">Express.js</li><li class="pill pill--outline">React</li><li class="pill pill--outline">Bootstrap</li></ul>
-      </div>
-      <div class="stack__row" data-rv style="--d:2">
-        <h3 class="stack__title"><span class="stack__code">03 / DATA</span>Databases</h3>
-        <ul class="pills"><li class="pill pill--outline">MongoDB</li><li class="pill pill--outline">MySQL</li><li class="pill pill--outline">Firebase</li><li class="pill pill--outline">SQLite</li></ul>
-      </div>
-      <div class="stack__row" data-rv style="--d:3">
-        <h3 class="stack__title"><span class="stack__code">04 / INTEL</span>AI &amp; Machine Learning</h3>
-        <ul class="pills"><li class="pill pill--outline">OpenAI APIs</li><li class="pill pill--outline">OCR</li><li class="pill pill--outline">LLMs</li><li class="pill pill--outline">Prompt Engineering</li><li class="pill pill--outline">Computer Vision</li><li class="pill pill--outline">Automation</li></ul>
-      </div>
-      <div class="stack__row" data-rv style="--d:4">
-        <h3 class="stack__title"><span class="stack__code">05 / TOOLS</span>Tools</h3>
-        <ul class="pills"><li class="pill pill--outline">Git</li><li class="pill pill--outline">GitHub</li><li class="pill pill--outline">VS Code</li><li class="pill pill--outline">Android Studio</li><li class="pill pill--outline">Postman</li><li class="pill pill--outline">Figma</li><li class="pill pill--outline">Docker</li><li class="pill pill--outline">Linux</li></ul>
-      </div>
+
+      <ul class="kit__grid" aria-label="Technical skills">
+        <li class="el" data-c="lang"><div class="el__in" data-glow><span class="el__n">01</span><span class="el__c">LANG<span class="sr-only">, Languages</span></span><span class="el__s" aria-hidden="true">Jv</span><span class="el__name">Java</span></div></li>
+        <li class="el" data-c="lang"><div class="el__in" data-glow><span class="el__n">02</span><span class="el__c">LANG<span class="sr-only">, Languages</span></span><span class="el__s" aria-hidden="true">Js</span><span class="el__name">JavaScript</span></div></li>
+        <li class="el" data-c="lang"><div class="el__in" data-glow><span class="el__n">03</span><span class="el__c">LANG<span class="sr-only">, Languages</span></span><span class="el__s" aria-hidden="true">Py</span><span class="el__name">Python</span></div></li>
+        <li class="el" data-c="lang"><div class="el__in" data-glow><span class="el__n">04</span><span class="el__c">LANG<span class="sr-only">, Languages</span></span><span class="el__s" aria-hidden="true">Dt</span><span class="el__name">Dart</span></div></li>
+        <li class="el" data-c="lang"><div class="el__in" data-glow><span class="el__n">05</span><span class="el__c">LANG<span class="sr-only">, Languages</span></span><span class="el__s" aria-hidden="true">Ht</span><span class="el__name">HTML</span></div></li>
+        <li class="el" data-c="lang"><div class="el__in" data-glow><span class="el__n">06</span><span class="el__c">LANG<span class="sr-only">, Languages</span></span><span class="el__s" aria-hidden="true">Cs</span><span class="el__name">CSS</span></div></li>
+        <li class="el" data-c="lang"><div class="el__in" data-glow><span class="el__n">07</span><span class="el__c">LANG<span class="sr-only">, Languages</span></span><span class="el__s" aria-hidden="true">Sq</span><span class="el__name">SQL</span></div></li>
+        <li class="el" data-c="frame"><div class="el__in" data-glow><span class="el__n">08</span><span class="el__c">FRAME<span class="sr-only">, Frameworks</span></span><span class="el__s" aria-hidden="true">Fl</span><span class="el__name">Flutter</span></div></li>
+        <li class="el" data-c="frame"><div class="el__in" data-glow><span class="el__n">09</span><span class="el__c">FRAME<span class="sr-only">, Frameworks</span></span><span class="el__s" aria-hidden="true">Nd</span><span class="el__name">Node.js</span></div></li>
+        <li class="el" data-c="frame"><div class="el__in" data-glow><span class="el__n">10</span><span class="el__c">FRAME<span class="sr-only">, Frameworks</span></span><span class="el__s" aria-hidden="true">Ex</span><span class="el__name">Express.js</span></div></li>
+        <li class="el" data-c="frame"><div class="el__in" data-glow><span class="el__n">11</span><span class="el__c">FRAME<span class="sr-only">, Frameworks</span></span><span class="el__s" aria-hidden="true">Re</span><span class="el__name">React</span></div></li>
+        <li class="el" data-c="frame"><div class="el__in" data-glow><span class="el__n">12</span><span class="el__c">FRAME<span class="sr-only">, Frameworks</span></span><span class="el__s" aria-hidden="true">Bs</span><span class="el__name">Bootstrap</span></div></li>
+        <li class="el" data-c="data"><div class="el__in" data-glow><span class="el__n">13</span><span class="el__c">DATA<span class="sr-only">, Databases</span></span><span class="el__s" aria-hidden="true">Mg</span><span class="el__name">MongoDB</span></div></li>
+        <li class="el" data-c="data"><div class="el__in" data-glow><span class="el__n">14</span><span class="el__c">DATA<span class="sr-only">, Databases</span></span><span class="el__s" aria-hidden="true">My</span><span class="el__name">MySQL</span></div></li>
+        <li class="el" data-c="data"><div class="el__in" data-glow><span class="el__n">15</span><span class="el__c">DATA<span class="sr-only">, Databases</span></span><span class="el__s" aria-hidden="true">Fb</span><span class="el__name">Firebase</span></div></li>
+        <li class="el" data-c="data"><div class="el__in" data-glow><span class="el__n">16</span><span class="el__c">DATA<span class="sr-only">, Databases</span></span><span class="el__s" aria-hidden="true">Sl</span><span class="el__name">SQLite</span></div></li>
+        <li class="el" data-c="ai"><div class="el__in" data-glow><span class="el__n">17</span><span class="el__c">INTEL<span class="sr-only">, AI and Machine Learning</span></span><span class="el__s" aria-hidden="true">Oa</span><span class="el__name">OpenAI APIs</span></div></li>
+        <li class="el" data-c="ai"><div class="el__in" data-glow><span class="el__n">18</span><span class="el__c">INTEL<span class="sr-only">, AI and Machine Learning</span></span><span class="el__s" aria-hidden="true">Oc</span><span class="el__name">OCR</span></div></li>
+        <li class="el" data-c="ai"><div class="el__in" data-glow><span class="el__n">19</span><span class="el__c">INTEL<span class="sr-only">, AI and Machine Learning</span></span><span class="el__s" aria-hidden="true">Lm</span><span class="el__name">LLMs</span></div></li>
+        <li class="el" data-c="ai"><div class="el__in" data-glow><span class="el__n">20</span><span class="el__c">INTEL<span class="sr-only">, AI and Machine Learning</span></span><span class="el__s" aria-hidden="true">Pe</span><span class="el__name">Prompt Engineering</span></div></li>
+        <li class="el" data-c="ai"><div class="el__in" data-glow><span class="el__n">21</span><span class="el__c">INTEL<span class="sr-only">, AI and Machine Learning</span></span><span class="el__s" aria-hidden="true">Cv</span><span class="el__name">Computer Vision</span></div></li>
+        <li class="el" data-c="ai"><div class="el__in" data-glow><span class="el__n">22</span><span class="el__c">INTEL<span class="sr-only">, AI and Machine Learning</span></span><span class="el__s" aria-hidden="true">Au</span><span class="el__name">Automation</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">23</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">Gt</span><span class="el__name">Git</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">24</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">Gh</span><span class="el__name">GitHub</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">25</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">Vs</span><span class="el__name">VS Code</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">26</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">As</span><span class="el__name">Android Studio</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">27</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">Pm</span><span class="el__name">Postman</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">28</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">Fg</span><span class="el__name">Figma</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">29</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">Dk</span><span class="el__name">Docker</span></div></li>
+        <li class="el" data-c="tools"><div class="el__in" data-glow><span class="el__n">30</span><span class="el__c">TOOLS<span class="sr-only">, Tools</span></span><span class="el__s" aria-hidden="true">Lx</span><span class="el__name">Linux</span></div></li>
+      </ul>
     </div>
   </div>
 
@@ -608,43 +750,80 @@
     <header class="shead">
       <div>
         <p class="kicker" data-rv><span class="kicker__tag">06://PROCESS</span><span class="kicker__label">My development process</span></p>
-        <h2 class="display shead__title" id="process-title" data-rv style="--d:1">Five stages, in order</h2>
+        <h2 class="display shead__title" id="process-title" data-rv="head">Five stages, in order</h2>
       </div>
       <p class="shead__lede" data-rv style="--d:2">The sequence matters. Discovery before design, design before code, and improvement that never really stops.</p>
     </header>
+  </div>
 
-    <ol class="timeline" data-rv>
-      <li class="step" style="--i:0">
-        <span class="step__dot" aria-hidden="true"></span>
-        <span class="step__no">01</span>
-        <h3 class="step__title">Discovery</h3>
-        <p class="step__desc">Understanding business goals, users and technical requirements before a line of code exists.</p>
-      </li>
-      <li class="step" style="--i:1">
-        <span class="step__dot" aria-hidden="true"></span>
-        <span class="step__no">02</span>
-        <h3 class="step__title">Product design</h3>
-        <p class="step__desc">Planning architecture, user experience and infrastructure that can scale with the business.</p>
-      </li>
-      <li class="step" style="--i:2">
-        <span class="step__dot" aria-hidden="true"></span>
-        <span class="step__no">03</span>
-        <h3 class="step__title">Development</h3>
-        <p class="step__desc">Building secure, maintainable and production-ready applications with tests and reviews.</p>
-      </li>
-      <li class="step" style="--i:3">
-        <span class="step__dot" aria-hidden="true"></span>
-        <span class="step__no">04</span>
-        <h3 class="step__title">Deployment</h3>
-        <p class="step__desc">Cloud deployment, testing, optimisation and monitoring so launch day is uneventful.</p>
-      </li>
-      <li class="step" style="--i:4">
-        <span class="step__dot" aria-hidden="true"></span>
-        <span class="step__no">05</span>
-        <h3 class="step__title">Continuous improvement</h3>
-        <p class="step__desc">Adding new features based on user feedback and analytics after the product is live.</p>
-      </li>
-    </ol>
+  <!-- Desktop: the stage pins and the five steps travel horizontally as you
+       scroll (js/motion.js). Phones / no JS / reduced motion: a vertical list. -->
+  <div class="proc" data-proc>
+    <div class="proc__pin">
+      <span class="proc__ghost" aria-hidden="true">Process</span>
+      <div class="wrap proc__hud" aria-hidden="true">
+        <span class="proc__cur">01</span>
+        <span class="proc__bar"><i></i></span>
+        <span class="proc__total">05</span>
+      </div>
+      <ol class="proc__track">
+        <li class="pstep">
+          <div class="pstep__card">
+            <div class="pstep__head">
+              <span class="pstep__no" data-no="01" aria-hidden="true"></span>
+              <svg class="pstep__art" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle class="d" cx="27" cy="27" r="17"/><path class="d" d="M39.5 39.5 L56 56"/><path class="d" d="M18 27 a9 9 0 0 1 9 -9"/><circle class="r" cx="27" cy="27" r="3"/></svg>
+            </div>
+            <p class="pstep__k">Stage 01</p>
+            <h3 class="pstep__title">Discovery</h3>
+            <p class="pstep__desc">Understanding business goals, users and technical requirements before a line of code exists.</p>
+          </div>
+        </li>
+        <li class="pstep">
+          <div class="pstep__card">
+            <div class="pstep__head">
+              <span class="pstep__no" data-no="02" aria-hidden="true"></span>
+              <svg class="pstep__art" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect class="d" x="6" y="10" width="52" height="44" rx="5"/><path class="d" d="M6 21 H58 M24 21 V54"/><path class="d" d="M31 30 H50 M31 38 H44 M31 46 H48"/><circle class="r" cx="12" cy="15.5" r="1.8"/></svg>
+            </div>
+            <p class="pstep__k">Stage 02</p>
+            <h3 class="pstep__title">Product design</h3>
+            <p class="pstep__desc">Planning architecture, user experience and infrastructure that can scale with the business.</p>
+          </div>
+        </li>
+        <li class="pstep">
+          <div class="pstep__card">
+            <div class="pstep__head">
+              <span class="pstep__no" data-no="03" aria-hidden="true"></span>
+              <svg class="pstep__art" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path class="d" d="M22 16 L6 32 L22 48"/><path class="d" d="M42 16 L58 32 L42 48"/><path class="d" d="M37 10 L27 54"/><circle class="r" cx="32" cy="32" r="2.6"/></svg>
+            </div>
+            <p class="pstep__k">Stage 03</p>
+            <h3 class="pstep__title">Development</h3>
+            <p class="pstep__desc">Building secure, maintainable and production-ready applications with tests and reviews.</p>
+          </div>
+        </li>
+        <li class="pstep">
+          <div class="pstep__card">
+            <div class="pstep__head">
+              <span class="pstep__no" data-no="04" aria-hidden="true"></span>
+              <svg class="pstep__art" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path class="d" d="M32 50 V8"/><path class="d" d="M18 22 L32 8 L46 22"/><path class="d" d="M8 58 H56"/><path class="d" d="M20 40 V50 M44 40 V50"/><circle class="r" cx="32" cy="58" r="3"/></svg>
+            </div>
+            <p class="pstep__k">Stage 04</p>
+            <h3 class="pstep__title">Deployment</h3>
+            <p class="pstep__desc">Cloud deployment, testing, optimisation and monitoring so launch day is uneventful.</p>
+          </div>
+        </li>
+        <li class="pstep">
+          <div class="pstep__card">
+            <div class="pstep__head">
+              <span class="pstep__no" data-no="05" aria-hidden="true"></span>
+              <svg class="pstep__art" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path class="d" d="M54 32 A22 22 0 1 1 47.6 16.4"/><path class="d" d="M48 6 V17 H37"/><path class="d" d="M20 40 L28 32 L34 37 L44 26"/><circle class="r" cx="44" cy="26" r="2.6"/></svg>
+            </div>
+            <p class="pstep__k">Stage 05</p>
+            <h3 class="pstep__title">Continuous improvement</h3>
+            <p class="pstep__desc">Adding new features based on user feedback and analytics after the product is live.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -656,17 +835,59 @@
     <header class="shead">
       <div>
         <p class="kicker" data-rv><span class="kicker__tag">07://WHY</span><span class="kicker__label">Why work with me</span></p>
-        <h2 class="display shead__title" id="why-title" data-rv style="--d:1">Engineering with a business brain</h2>
+        <h2 class="display shead__title" id="why-title" data-rv="head">Engineering with a business brain</h2>
       </div>
       <p class="shead__lede" data-rv style="--d:2">Five things that tend to matter more than the framework on the CV.</p>
     </header>
 
-    <div class="why">
-      <article class="why__card" data-rv><span class="why__no">01</span><h3 class="why__title">Product mindset</h3><p>I think beyond writing code — the product has to work as a business, not just compile.</p></article>
-      <article class="why__card" data-rv style="--d:1"><span class="why__no">02</span><h3 class="why__title">Startup experience</h3><p>I've taken products from idea to MVP, with the constraints that come with it.</p></article>
-      <article class="why__card" data-rv style="--d:2"><span class="why__no">03</span><h3 class="why__title">End-to-end development</h3><p>Frontend, backend, database, APIs and deployment handled by one person.</p></article>
-      <article class="why__card" data-rv style="--d:3"><span class="why__no">04</span><h3 class="why__title">AI integration</h3><p>Modern AI solutions that measurably improve productivity and automation.</p></article>
-      <article class="why__card" data-rv style="--d:4"><span class="why__no">05</span><h3 class="why__title">Business focus</h3><p>Technology should generate measurable business value. That's the scorecard.</p></article>
+    <!-- Desktop: five panels; the one you hover or focus expands.
+         Phones: a stack of cards with everything visible. -->
+    <div class="why" data-why>
+      <article class="why__item is-active" tabindex="0" data-rv>
+        <span class="why__big" aria-hidden="true">01</span>
+        <span class="why__vert" aria-hidden="true">Product mindset</span>
+        <div class="why__content">
+          <span class="why__no">01 / 05</span>
+          <h3 class="why__title">Product mindset</h3>
+          <p class="why__text">I think beyond writing code — the product has to work as a business, not just compile.</p>
+        </div>
+      </article>
+      <article class="why__item" tabindex="0" data-rv style="--d:1">
+        <span class="why__big" aria-hidden="true">02</span>
+        <span class="why__vert" aria-hidden="true">Startup experience</span>
+        <div class="why__content">
+          <span class="why__no">02 / 05</span>
+          <h3 class="why__title">Startup experience</h3>
+          <p class="why__text">I've taken products from idea to MVP, with the constraints that come with it.</p>
+        </div>
+      </article>
+      <article class="why__item" tabindex="0" data-rv style="--d:2">
+        <span class="why__big" aria-hidden="true">03</span>
+        <span class="why__vert" aria-hidden="true">End-to-end development</span>
+        <div class="why__content">
+          <span class="why__no">03 / 05</span>
+          <h3 class="why__title">End-to-end development</h3>
+          <p class="why__text">Frontend, backend, database, APIs and deployment handled by one person.</p>
+        </div>
+      </article>
+      <article class="why__item" tabindex="0" data-rv style="--d:3">
+        <span class="why__big" aria-hidden="true">04</span>
+        <span class="why__vert" aria-hidden="true">AI integration</span>
+        <div class="why__content">
+          <span class="why__no">04 / 05</span>
+          <h3 class="why__title">AI integration</h3>
+          <p class="why__text">Modern AI solutions that measurably improve productivity and automation.</p>
+        </div>
+      </article>
+      <article class="why__item" tabindex="0" data-rv style="--d:4">
+        <span class="why__big" aria-hidden="true">05</span>
+        <span class="why__vert" aria-hidden="true">Business focus</span>
+        <div class="why__content">
+          <span class="why__no">05 / 05</span>
+          <h3 class="why__title">Business focus</h3>
+          <p class="why__text">Technology should generate measurable business value. That's the scorecard.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -774,15 +995,28 @@
 </main>
 
 <!-- =====================================================================
-     FOOTER — minimal row + giant cropped wordmark
+     FOOTER — scroll-driven finale (js/motion.js, section 09)
+     1. A white sheet rises from below the page and the copyright rises with it.
+     2. Red floods up from the bottom and blends the white away; the copyright
+        fades and sinks downward.
+     3. The giant wordmark rises into place on the red.
+     Without JS / with reduced motion it is a static white footer.
      ===================================================================== -->
-<footer class="foot">
-  <div class="wrap foot__row">
-    <span>© <span id="yr">2026</span> Vaishnav Cibu</span>
-    <span>Founder · Corezentric Technologies LLP</span>
-    <a href="#top" class="foot__top">Back to top <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+<footer class="foot" id="foot">
+  <div class="foot__track">
+    <div class="foot__stage">
+      <div class="foot__sheet">
+        <div class="foot__red" aria-hidden="true"></div>
+        <div class="foot__content">
+          <p class="foot__mono" aria-hidden="true">VC<span>.</span></p>
+          <p class="foot__copy">© <span id="yr">2026</span> Vaishnav Cibu. All rights reserved.</p>
+          <p class="foot__sub">Founder<span class="sep" aria-hidden="true"></span>Corezentric Technologies LLP</p>
+          <a href="#top" class="pill pill--dark pill--icon foot__top">Back to top<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
+        </div>
+        <div class="foot__mark" data-text="Vaishnav Cibu" aria-hidden="true"></div>
+      </div>
+    </div>
   </div>
-  <div class="foot__mark" data-text="Vaishnav Cibu" aria-hidden="true"></div>
 </footer>
 
 </body>
