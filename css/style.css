@@ -43,7 +43,6 @@
   --white-24:rgba(255,255,255,.24);
   --white-12:rgba(255,255,255,.12);/* hairlines */
   --white-06:rgba(255,255,255,.06);
-  --white-0:rgba(255,255,255,0);   /* transparent white: keeps light sweeps from going grey */
 
   /* Red — accent only (~10% of any screen) */
   --red-600:#C1121F;              /* dots, active states, highlights */
@@ -1468,20 +1467,20 @@ a.cline:hover .cline__ico{transform:rotate(45deg);background:var(--white);color:
 /* Wordmark scroll animation (js/motion.js, section 11). The footer itself is
    unchanged: these rules only apply once the script adds .is-live, so with no
    JS or with reduced motion the wordmark is exactly the static original.
-   --rise / --fade  scrubbed to the scroll position (rise in, fade in; and
-                    back down / out again when you scroll back up)
-   --shine          a soft light band that sweeps across once it has arrived
-   --glow, --glow-a a brief white halo at the same moment                  */
+   All values are scrubbed to the scroll position:
+   --rise / --fade   rise into view → hold → sink down and fade out
+   --sweep           a red glow band that passes across the letters
+   --glow / --glow-a a soft red halo while the band passes                 */
 .foot__mark.is-live::before{
   translate:0 calc(4% + var(--rise, 0%));
   opacity:var(--fade, 1);
   background:
-    linear-gradient(105deg, var(--white-0) calc(var(--shine, -40%) - 16%), var(--white-80) var(--shine, -40%), var(--white-0) calc(var(--shine, -40%) + 16%)),
+    linear-gradient(105deg, var(--red-600-0) calc(var(--sweep, -40%) - 18%), var(--red-600) var(--sweep, -40%), var(--red-600-0) calc(var(--sweep, -40%) + 18%)),
     linear-gradient(180deg, var(--white) 0%, var(--white-24) 55%, transparent 95%);
   -webkit-background-clip:text;background-clip:text;
 }
-/* halo colour = --white at a variable opacity (0 → .55 → 0) */
-.foot__mark.is-glow::before{filter:drop-shadow(0 0 var(--glow, 0px) rgb(255 255 255 / var(--glow-a, 0)))}
+/* halo colour = --red-600 (193 18 31) at a variable opacity (0 → .6 → 0) */
+.foot__mark.is-glow::before{filter:drop-shadow(0 0 var(--glow, 0px) rgb(193 18 31 / var(--glow-a, 0)))}
 
 
 /* =========================================================================

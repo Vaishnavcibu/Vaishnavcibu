@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.1.3 — Wordmark sequence: rise, hold, red sweep, sink (November 2026)
+
+- **Fixed: the giant "VAISHNAV CIBU" looked frozen while scrolling.** Its rise
+  moved it down inside its strip at the same speed the page moved up, so on
+  screen it stood still. It now lifts only a short way and moves up with the
+  page.
+- **New sequence, tied to the scroll position.** It runs over the last
+  stretch of the page, from the wordmark entering the screen to the bottom:
+  1. it rises into view and fades in;
+  2. it holds, fully visible;
+  3. a red glow band passes across the letters, with a soft red halo;
+  4. as the red passes, it sinks downward and fades out.
+
+  Scrolling back up plays it in reverse.
+- The wordmark is the last thing on the page, so this stretch is short (11vw).
+  The animation follows the scroll with an even catch-up: a quick flick to
+  the bottom still unfolds the whole sequence over about 2½ seconds, and small
+  scrolls respond at once.
+- The footer layout and every other footer element are unchanged, and no
+  space was added below the footer. With no JavaScript or with reduced
+  motion, the wordmark is the static original.
+
 ## 2.1.2 — Deploys always load matching files (November 2026)
 
 - **Fixed: after a deploy the footer could look broken for a few minutes.**

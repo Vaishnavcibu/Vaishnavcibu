@@ -453,61 +453,50 @@
   /* -----------------------------------------------------------------------
      11 · FOOTER WORDMARK — only the giant "VAISHNAV CIBU" at the very bottom
      moves; the footer itself is the original, unchanged.
-     - Scrolling down into the footer: the name rises out of its clip line
-       and fades in, in step with the scroll.
-     - Once it has settled: a soft light sweeps across it with a brief halo.
-     - Scrolling back up: it fades and sinks back down (same scrub, reversed).
-     The wordmark is the last thing on the page, so the bottom of the page is
-     where it settles; nothing extra is added below the footer.
+
+     One timeline, scrubbed to the scroll position over the last stretch of
+     the page (from the wordmark's top edge entering the screen to the very
+     bottom of the page):
+       0.00–0.32  rises into view and fades in, moving up WITH the page
+                  (a short lift, so it never looks frozen in place)
+       0.32–0.45  holds, fully visible
+       0.45–0.87  a red glow band passes across the letters, with a soft
+                  red halo
+       0.64–1.00  as the red passes, it sinks downward and fades out
+     Scrolling back up plays it in reverse. The wordmark is the last thing on
+     the page, so this range is short (11vw). Instead of ScrollTrigger's
+     built-in scrub (which rushes the first half of a catch-up), the timeline
+     follows the scroll with an even, gentle catch-up: small scrolls respond
+     at once, and a quick flick to the bottom still unfolds the whole
+     sequence over about two seconds.
      ----------------------------------------------------------------------- */
   var mark = $('.foot__mark');
   if (hasGsap && mark) now(function () {
     mark.classList.add('is-live');
-    var shone = false;
-    var shining = false;
 
-    var shimmer = function () {
-      if (shining) return;
-      shining = true;
-      var s = { shine: -40, glow: 0, a: 0 };
-      var paint = function () {
-        mark.style.setProperty('--shine', s.shine.toFixed(1) + '%');
-        mark.style.setProperty('--glow', s.glow.toFixed(1) + 'px');
-        mark.style.setProperty('--glow-a', s.a.toFixed(3));
-      };
-      mark.classList.add('is-glow');
-      var done = function () {
-        mark.classList.remove('is-glow');
-        mark.style.setProperty('--shine', '-40%');
-        shining = false;
-      };
-      if (anime) {
-        anime.timeline({ targets: s, update: paint, complete: done })
-          .add({ shine: 140, duration: 1700, easing: 'easeInOutSine' }, 450)
-          .add({ glow: 22, a: 0.55, duration: 700, easing: 'easeOutQuad' }, 650)
-          .add({ glow: 0, a: 0, duration: 1200, easing: 'easeInOutSine' }, 1350);
-      } else {
-        gsap.timeline({ onUpdate: paint, onComplete: done, delay: 0.45 })
-          .to(s, { shine: 140, duration: 1.7, ease: 'sine.inOut' }, 0)
-          .to(s, { glow: 22, a: 0.55, duration: 0.7, ease: 'power1.out' }, 0.2)
-          .to(s, { glow: 0, a: 0, duration: 1.2, ease: 'sine.inOut' }, 0.9);
-      }
-    };
+    var seq = gsap.timeline({ paused: true, defaults: { ease: 'none' } })
+      .fromTo(mark, { '--rise': '35%', '--fade': 0 }, { '--rise': '0%', '--fade': 1, duration: 0.32, ease: 'power2.out' }, 0)
+      .fromTo(mark, { '--sweep': '-40%' }, { '--sweep': '140%', duration: 0.42, ease: 'sine.inOut' }, 0.45)
+      .fromTo(mark, { '--glow': '0px', '--glow-a': 0 }, { '--glow': '28px', '--glow-a': 0.6, duration: 0.2, ease: 'sine.out' }, 0.5)
+      .to(mark, { '--glow': '0px', '--glow-a': 0, duration: 0.24, ease: 'sine.in' }, 0.72)
+      .to(mark, { '--rise': '60%', '--fade': 0, duration: 0.31, ease: 'power1.in' }, 0.64)
+      .to({}, { duration: 0.05 });  // finished just before the page bottom (see "end")
 
-    gsap.fromTo(mark, { '--rise': '75%', '--fade': 0 }, {
-      '--rise': '0%', '--fade': 1, ease: 'power2.out',
-      scrollTrigger: {
-        trigger: mark,
-        start: 'top bottom',        // its top edge reaches the bottom of the screen
-        end: 'bottom bottom',       // the bottom of the page
-        scrub: 0.9,
-        invalidateOnRefresh: true,
-        onUpdate: function (self) {
-          if (!shone && self.direction > 0 && self.progress > 0.96) { shone = true; shimmer(); }
-        },
-        // shine again on the next visit (only once it has really scrolled away)
-        onLeaveBack: function () { shone = false; }
-      }
+    var follow = null;
+    ST.create({
+      trigger: mark,
+      start: 'top bottom',          // its top edge reaches the bottom of the screen
+      // 1px past the bottom of the page, so the page bottom stays inside the
+      // range and the sequence always plays out instead of skipping to the end
+      end: 'bottom bottom-=1',
+      invalidateOnRefresh: true,
+      onUpdate: function (self) {
+        var gap = Math.abs(self.progress - seq.progress());
+        if (follow) follow.kill();
+        follow = gsap.to(seq, { progress: self.progress, duration: 0.5 + gap * 2.1, ease: 'sine.inOut' });
+      },
+      // the red halo filter is only switched on while this range is in play
+      onToggle: function (self) { mark.classList.toggle('is-glow', self.isActive); }
     });
   });
 
