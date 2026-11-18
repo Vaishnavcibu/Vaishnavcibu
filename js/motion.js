@@ -24,7 +24,7 @@
    08 Toolkit: grid entrance + filter animation
    09 Process: pinned horizontal sequence (desktop) / filling rail (phones)
    10 Why: staggered text when a panel opens
-   11 Footer finale
+   11 Footer wordmark: rise, shimmer, settle
    ========================================================================= */
 (function () {
   'use strict';
@@ -115,7 +115,7 @@
      03 · MAGNETIC BUTTONS — primary pills lean toward the pointer
      ----------------------------------------------------------------------- */
   if (hasGsap && finePointer) task(function () {
-    $$('.nav__cta, .work__links .pill, .projects__more .pill, .foot__top').forEach(function (el) {
+    $$('.nav__cta, .work__links .pill, .projects__more .pill').forEach(function (el) {
       var xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' });
       var yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3.out' });
       el.addEventListener('pointermove', function (e) {
@@ -451,41 +451,64 @@
 
 
   /* -----------------------------------------------------------------------
-     11 · FOOTER FINALE (scrubbed to the scroll position)
-     0.00–0.42  the white sheet rises from below, the copyright rises with it
-     0.48–0.86  red floods up from the bottom and blends the white away;
-                meanwhile the copyright fades and sinks downward
-     0.70–1.00  the giant wordmark rises onto the red
+     11 · FOOTER WORDMARK — only the giant "VAISHNAV CIBU" at the very bottom
+     moves; the footer itself is the original, unchanged.
+     - Scrolling down into the footer: the name rises out of its clip line
+       and fades in, in step with the scroll.
+     - Once it has settled: a soft light sweeps across it with a brief halo.
+     - Scrolling back up: it fades and sinks back down (same scrub, reversed).
+     The wordmark is the last thing on the page, so the bottom of the page is
+     where it settles; nothing extra is added below the footer.
      ----------------------------------------------------------------------- */
-  var foot = $('#foot');
-  if (hasGsap && foot) now(function () {
-    var sheet = $('.foot__sheet', foot);
-    var red = $('.foot__red', foot);
-    var content = $('.foot__content', foot);
-    var mark = $('.foot__mark', foot);
-    var navEl = $('#nav');
-    foot.classList.add('foot--live');
-    gsap.set(red, { yPercent: 100 });
-    gsap.set(mark, { yPercent: 105 });
+  var mark = $('.foot__mark');
+  if (hasGsap && mark) now(function () {
+    mark.classList.add('is-live');
+    var shone = false;
+    var shining = false;
 
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: $('.foot__track', foot),
-        start: 'top bottom',
-        end: 'bottom bottom',
-        scrub: 0.8,
-        invalidateOnRefresh: true,
-        onUpdate: function (self) { if (navEl) navEl.classList.toggle('is-away', self.progress > 0.5); }
+    var shimmer = function () {
+      if (shining) return;
+      shining = true;
+      var s = { shine: -40, glow: 0, a: 0 };
+      var paint = function () {
+        mark.style.setProperty('--shine', s.shine.toFixed(1) + '%');
+        mark.style.setProperty('--glow', s.glow.toFixed(1) + 'px');
+        mark.style.setProperty('--glow-a', s.a.toFixed(3));
+      };
+      mark.classList.add('is-glow');
+      var done = function () {
+        mark.classList.remove('is-glow');
+        mark.style.setProperty('--shine', '-40%');
+        shining = false;
+      };
+      if (anime) {
+        anime.timeline({ targets: s, update: paint, complete: done })
+          .add({ shine: 140, duration: 1700, easing: 'easeInOutSine' }, 450)
+          .add({ glow: 22, a: 0.55, duration: 700, easing: 'easeOutQuad' }, 650)
+          .add({ glow: 0, a: 0, duration: 1200, easing: 'easeInOutSine' }, 1350);
+      } else {
+        gsap.timeline({ onUpdate: paint, onComplete: done, delay: 0.45 })
+          .to(s, { shine: 140, duration: 1.7, ease: 'sine.inOut' }, 0)
+          .to(s, { glow: 22, a: 0.55, duration: 0.7, ease: 'power1.out' }, 0.2)
+          .to(s, { glow: 0, a: 0, duration: 1.2, ease: 'sine.inOut' }, 0.9);
       }
-    })
-      .fromTo(sheet, { scale: 0.86, yPercent: 10 }, { scale: 1, yPercent: 0, duration: 0.42, ease: 'power1.out' }, 0)
-      .fromTo(content, { yPercent: 45, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.34, ease: 'power2.out' }, 0.08)
-      .to(red, { yPercent: 0, duration: 0.38, ease: 'power1.inOut' }, 0.48)
-      .to(content, { y: function () { return window.innerHeight * 0.24; }, opacity: 0, duration: 0.3, ease: 'power1.in' }, 0.54)
-      .to(mark, { yPercent: 0, duration: 0.3, ease: 'power2.out' }, 0.7)
-      .to({}, { duration: 0.04 });
+    };
 
+    gsap.fromTo(mark, { '--rise': '75%', '--fade': 0 }, {
+      '--rise': '0%', '--fade': 1, ease: 'power2.out',
+      scrollTrigger: {
+        trigger: mark,
+        start: 'top bottom',        // its top edge reaches the bottom of the screen
+        end: 'bottom bottom',       // the bottom of the page
+        scrub: 0.9,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          if (!shone && self.direction > 0 && self.progress > 0.96) { shone = true; shimmer(); }
+        },
+        // shine again on the next visit (only once it has really scrolled away)
+        onLeaveBack: function () { shone = false; }
+      }
+    });
   });
 
   /* Keep every trigger measured correctly when the page height changes after

@@ -995,28 +995,16 @@
 </main>
 
 <!-- =====================================================================
-     FOOTER — scroll-driven finale (js/motion.js, section 09)
-     1. A white sheet rises from below the page and the copyright rises with it.
-     2. Red floods up from the bottom and blends the white away; the copyright
-        fades and sinks downward.
-     3. The giant wordmark rises into place on the red.
-     Without JS / with reduced motion it is a static white footer.
+     FOOTER — minimal row + giant cropped wordmark
+     (the wordmark rises, shimmers and settles as you scroll: js/motion.js §11)
      ===================================================================== -->
-<footer class="foot" id="foot">
-  <div class="foot__track">
-    <div class="foot__stage">
-      <div class="foot__sheet">
-        <div class="foot__red" aria-hidden="true"></div>
-        <div class="foot__content">
-          <p class="foot__mono" aria-hidden="true">VC<span>.</span></p>
-          <p class="foot__copy">© <span id="yr">2026</span> Vaishnav Cibu. All rights reserved.</p>
-          <p class="foot__sub">Founder<span class="sep" aria-hidden="true"></span>Corezentric Technologies LLP</p>
-          <a href="#top" class="pill pill--dark pill--icon foot__top">Back to top<span class="pill__icon" aria-hidden="true"><svg class="ico"><use href="#i-arrow"/></svg></span></a>
-        </div>
-        <div class="foot__mark" data-text="Vaishnav Cibu" aria-hidden="true"></div>
-      </div>
-    </div>
+<footer class="foot">
+  <div class="wrap foot__row">
+    <span>© <span id="yr">2026</span> Vaishnav Cibu</span>
+    <span>Founder · Corezentric Technologies LLP</span>
+    <a href="#top" class="foot__top">Back to top <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </div>
+  <div class="foot__mark" data-text="Vaishnav Cibu" aria-hidden="true"></div>
 </footer>
 
 </body>

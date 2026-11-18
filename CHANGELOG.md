@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.1.1 — Footer restored (November 2026)
+
+- **The footer is back to its 2.0.0 design.** The markup and styles are
+  identical to commit `c0f4779`:
+  - the row with "© 2026 Vaishnav Cibu", "Founder · Corezentric
+    Technologies LLP" and the "Back to top" link;
+  - the giant cropped "VAISHNAV CIBU" wordmark on the page's dark background.
+- **Removed** everything 2.1.0 added there: the white sheet, the white-to-red
+  transition, the extra scroll space below the page, the nav sliding away,
+  and the "All rights reserved." text.
+- **New: only the wordmark animates** (`js/motion.js`, section 11).
+  1. As you scroll into the footer it rises out of its clip line and fades
+     in, in step with the scroll.
+  2. Once it settles at the bottom, a soft light sweeps across it with a
+     brief white halo (about 2.5 seconds).
+  3. Scrolling back up makes it fade and sink back down. It shines again the
+     next time you reach the bottom.
+- With no JavaScript or with reduced motion, the wordmark is exactly the
+  static original.
+- Checked: no horizontal scroll and no console errors at 375, 768, 1440 and
+  1536 px.
+- Lighthouse in A/B runs: mobile 94 (2.0.0: 92), desktop 100;
+  Accessibility, Best Practices and SEO 100.
+
 ## 2.1.0 — Laptop layout fix, motion, section upgrades (November 2026)
 
 ### Fixed
