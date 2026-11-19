@@ -1472,10 +1472,14 @@ a.cline:hover .cline__ico{transform:rotate(45deg);background:var(--white);color:
                      the whole block, so the wordmark and its top line move
                      and fade together as one unit (.foot clips the overflow)
    --sweep           a red glow band that passes across the letters
-   --glow / --glow-a a soft red halo while the band passes                 */
+   --glow / --glow-a a soft red halo while the band passes
+   --shut            0 → 1 once it has faded out: the empty strip closes (a
+                     negative margin equal to its 11vw height) so the page
+                     ends right at the footer row; .foot clips the rest      */
 .foot__mark.is-live{
   translate:0 var(--rise, 0%);
   opacity:var(--fade, 1);
+  margin-bottom:calc(var(--shut, 0) * -11vw);
 }
 .foot__mark.is-live::before{
   background:

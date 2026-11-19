@@ -466,15 +466,22 @@
                   red halo
        0.64–1.00  as the red passes, the block sinks downward and fades out
      Scrolling back up plays it in reverse. The wordmark is the last thing on
-     the page, so this range is short (11vw). Instead of ScrollTrigger's
-     built-in scrub (which rushes the first half of a catch-up), the timeline
-     follows the scroll with an even, gentle catch-up: small scrolls respond
-     at once, and a quick flick to the bottom still unfolds the whole
-     sequence over about two seconds.
+     the page, so this range is short (11vw). Instead of a built-in scrub
+     (which rushes the first half of a catch-up), the timeline follows the
+     scroll with an even, gentle catch-up: small scrolls respond at once, and
+     a quick flick to the bottom still unfolds the whole sequence over about
+     two seconds.
+
+     Once it has faded out, its now-empty strip closes (a short timed
+     glide, --shut 0 → 1), so the page ends cleanly at the footer row with
+     no blank gap. The strip can't simply shrink with the scroll: it IS the
+     scroll distance the sequence plays over, so it would pull the page
+     bottom away under the reader. Scrolling back up reopens it out of sight,
+     below the screen, ready to play again on the way down.
      ----------------------------------------------------------------------- */
   var mark = $('.foot__mark');
-  var foot = mark && mark.parentNode;
-  if (hasGsap && mark) now(function () {
+  var row = mark && mark.previousElementSibling;   // the footer row above it
+  if (hasGsap && mark && row) now(function () {
     mark.classList.add('is-live');
 
     // --rise is a % of the block's own height (11vw): 46% / 80% move it the
@@ -485,27 +492,79 @@
       .fromTo(mark, { '--glow': '0px', '--glow-a': 0 }, { '--glow': '28px', '--glow-a': 0.6, duration: 0.2, ease: 'sine.out' }, 0.5)
       .to(mark, { '--glow': '0px', '--glow-a': 0, duration: 0.24, ease: 'sine.in' }, 0.72)
       .to(mark, { '--rise': '80%', '--fade': 0, duration: 0.31, ease: 'power1.in' }, 0.64)
-      .to({}, { duration: 0.05 });  // finished just before the page bottom (see "end")
+      .to({}, { duration: 0.05 });  // finished just before the page bottom (see "p")
 
-    var follow = null;
-    ST.create({
-      // measured on the footer, which never moves (the block itself is
-      // shifted by the animation); the block is the footer's last child
-      trigger: foot,
-      // the block's top edge reaches the bottom of the screen
-      start: function () { return 'bottom-=' + mark.offsetHeight + ' bottom'; },
-      // 1px past the bottom of the page, so the page bottom stays inside the
-      // range and the sequence always plays out instead of skipping to the end
-      end: 'bottom bottom-=1',
-      invalidateOnRefresh: true,
-      onUpdate: function (self) {
-        var gap = Math.abs(self.progress - seq.progress());
-        if (follow) follow.kill();
-        follow = gsap.to(seq, { progress: self.progress, duration: 0.5 + gap * 2.1, ease: 'sine.inOut' });
-      },
+    var DONE = 0.95;          // timeline position where the block has fully faded
+    var top = -1;             // the strip's resting top edge, in page px
+    var len = 1;              // the strip's height (11vw)
+    var state = 'open';       // open → closing → closed → (scroll up) → open
+    var follow = null, shut = null, lastP = -1, baseY = 0, ticking = false;
+    var scrollMax = function () { return document.documentElement.scrollHeight - window.innerHeight; };
+
+    // Positions are read from the footer row, which never moves, and from the
+    // strip's layout height, which the animation never changes.
+    var measure = function () {
+      top = row.getBoundingClientRect().bottom + window.pageYOffset;
+      len = mark.offsetHeight || 1;
+      if (state === 'closed') baseY = window.pageYOffset;
+      lastP = -1;
+      update();
+    };
+
+    var close = function () {
+      state = 'closing';
+      mark.classList.remove('is-glow');
+      shut = gsap.to(mark, {
+        '--shut': 1, duration: 0.7, ease: 'power2.inOut',
+        onComplete: function () {
+          state = 'closed';
+          baseY = window.pageYOffset;
+          // the reader already scrolled away while it closed: reopen at once
+          // (the strip is below the screen, so nothing visibly moves)
+          if (baseY < scrollMax() - 4) reopen();
+        }
+      });
+    };
+
+    var reopen = function () {
+      state = 'open';
+      if (shut) shut.kill();
+      if (follow) follow.kill();
+      gsap.set(mark, { '--shut': 0 });
+      seq.progress(0);
+      lastP = 0;
+    };
+
+    function update() {
+      ticking = false;
+      if (top < 0 || state === 'closing') return;
+      var y = window.pageYOffset;
+      if (state === 'closed') {
+        // a real scroll up (not an overscroll bounce settling back)
+        if (y < baseY - 4) reopen(); else return;
+      }
+      // 0 = the strip's top edge at the bottom of the screen,
+      // 1 = 1px past the bottom of the page (never quite reached, so the
+      //     sequence always plays out instead of skipping to the end)
+      var p = (y + window.innerHeight - top) / (len + 1);
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      if (p === lastP) return;
+      lastP = p;
       // the red halo filter is only switched on while this range is in play
-      onToggle: function (self) { mark.classList.toggle('is-glow', self.isActive); }
-    });
+      mark.classList.toggle('is-glow', p > 0 && p < 1);
+      if (follow) follow.kill();
+      follow = gsap.to(seq, {
+        progress: p, duration: 0.5 + Math.abs(p - seq.progress()) * 2.1, ease: 'sine.inOut',
+        onUpdate: function () { if (state === 'open' && seq.progress() >= DONE) close(); }
+      });
+    }
+
+    window.addEventListener('scroll', function () {
+      if (top < 0) measure();
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    // re-read positions whenever the page is re-measured (load, fonts, resize)
+    ST.addEventListener('refresh', measure);
   });
 
   /* Keep every trigger measured correctly when the page height changes after
@@ -537,11 +596,15 @@
     };
     if (!loaded) window.addEventListener('load', function () { loaded = true; });
     if ('ResizeObserver' in window) {
+      // Watches <main> (every trigger lives there), not <body>: the footer
+      // strip closing and reopening changes the page height on purpose and
+      // must not cause a full re-measure, which would also stop a scroll in
+      // progress.
       new ResizeObserver(function (entries) {
         var h = Math.round(entries[0].contentRect.height);   // no forced layout
         if (lastH !== -1 && Math.abs(h - lastH) > 1) remeasure();
         lastH = h;
-      }).observe(document.body);
+      }).observe($('#main') || document.body);
     }
     if (document.fonts && document.fonts.addEventListener) {
       document.fonts.addEventListener('loadingdone', remeasure);

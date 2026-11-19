@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.1.5 — Footer ends cleanly after the wordmark fades (November 2026)
+
+- **Fixed: an empty strip stayed below the footer once "VAISHNAV CIBU" had
+  faded out.** As soon as the fade-out finishes, the strip it occupied now
+  closes in a short glide (about 0.7s). The footer row settles to the bottom
+  of the screen and the page ends there, with no blank gap.
+- Scrolling back up reopens the strip out of sight below the screen, so the
+  sequence (rise, hold, red sweep, sink and fade) plays again each time you
+  scroll down to the end. Extra scrolling or an overscroll bounce at the
+  bottom leaves it closed.
+- The sequence itself, its timing and the footer design are unchanged. The
+  strip can't shrink with the scroll position, because it is the scroll
+  distance the sequence plays over: shrinking it would pull the page bottom
+  away mid-scroll.
+- Page re-measuring now watches the main content instead of the whole page,
+  so the strip opening and closing never interrupts a scroll in progress.
+
 ## 2.1.4 — Wordmark and its line move as one unit (November 2026)
 
 - **The thin line above the giant "VAISHNAV CIBU" now moves with it.** Before,
