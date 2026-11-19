@@ -451,18 +451,20 @@
 
 
   /* -----------------------------------------------------------------------
-     11 · FOOTER WORDMARK — only the giant "VAISHNAV CIBU" at the very bottom
-     moves; the footer itself is the original, unchanged.
+     11 · FOOTER WORDMARK — only the giant "VAISHNAV CIBU" block at the very
+     bottom (the wordmark together with its thin top line) moves; the footer
+     row above it is the original, unchanged.
 
      One timeline, scrubbed to the scroll position over the last stretch of
      the page (from the wordmark's top edge entering the screen to the very
-     bottom of the page):
+     bottom of the page). Rise, sink and fade apply to the whole block, so
+     the line and the letters always move as one unit:
        0.00–0.32  rises into view and fades in, moving up WITH the page
                   (a short lift, so it never looks frozen in place)
        0.32–0.45  holds, fully visible
        0.45–0.87  a red glow band passes across the letters, with a soft
                   red halo
-       0.64–1.00  as the red passes, it sinks downward and fades out
+       0.64–1.00  as the red passes, the block sinks downward and fades out
      Scrolling back up plays it in reverse. The wordmark is the last thing on
      the page, so this range is short (11vw). Instead of ScrollTrigger's
      built-in scrub (which rushes the first half of a catch-up), the timeline
@@ -471,21 +473,27 @@
      sequence over about two seconds.
      ----------------------------------------------------------------------- */
   var mark = $('.foot__mark');
+  var foot = mark && mark.parentNode;
   if (hasGsap && mark) now(function () {
     mark.classList.add('is-live');
 
+    // --rise is a % of the block's own height (11vw): 46% / 80% move it the
+    // same distance the letters travelled before (about 5vw up, 9vw down)
     var seq = gsap.timeline({ paused: true, defaults: { ease: 'none' } })
-      .fromTo(mark, { '--rise': '35%', '--fade': 0 }, { '--rise': '0%', '--fade': 1, duration: 0.32, ease: 'power2.out' }, 0)
+      .fromTo(mark, { '--rise': '46%', '--fade': 0 }, { '--rise': '0%', '--fade': 1, duration: 0.32, ease: 'power2.out' }, 0)
       .fromTo(mark, { '--sweep': '-40%' }, { '--sweep': '140%', duration: 0.42, ease: 'sine.inOut' }, 0.45)
       .fromTo(mark, { '--glow': '0px', '--glow-a': 0 }, { '--glow': '28px', '--glow-a': 0.6, duration: 0.2, ease: 'sine.out' }, 0.5)
       .to(mark, { '--glow': '0px', '--glow-a': 0, duration: 0.24, ease: 'sine.in' }, 0.72)
-      .to(mark, { '--rise': '60%', '--fade': 0, duration: 0.31, ease: 'power1.in' }, 0.64)
+      .to(mark, { '--rise': '80%', '--fade': 0, duration: 0.31, ease: 'power1.in' }, 0.64)
       .to({}, { duration: 0.05 });  // finished just before the page bottom (see "end")
 
     var follow = null;
     ST.create({
-      trigger: mark,
-      start: 'top bottom',          // its top edge reaches the bottom of the screen
+      // measured on the footer, which never moves (the block itself is
+      // shifted by the animation); the block is the footer's last child
+      trigger: foot,
+      // the block's top edge reaches the bottom of the screen
+      start: function () { return 'bottom-=' + mark.offsetHeight + ' bottom'; },
       // 1px past the bottom of the page, so the page bottom stays inside the
       // range and the sequence always plays out instead of skipping to the end
       end: 'bottom bottom-=1',
@@ -504,6 +512,19 @@
      load: web fonts arrive (their stylesheet switches on after load), images
      are added, the window is resized... Debounced, and only on real changes. */
   if (hasGsap) now(function () {
+    // The page uses CSS smooth scrolling (for its anchor links). To measure,
+    // ScrollTrigger jumps to the top and back; it switches smooth scrolling
+    // off first, but Chrome only applies that switch after the jump has
+    // already started smoothly. Away from the top (e.g. resizing the window
+    // at the bottom of the page) every trigger was then measured from the
+    // wrong place. Switch it off one step earlier and apply it at once;
+    // ScrollTrigger turns smooth scrolling back on after the refresh.
+    var root = document.documentElement;
+    ST.addEventListener('refreshInit', function () {
+      root.style.scrollBehavior = 'auto';
+      void getComputedStyle(root).scrollBehavior;   // apply it now
+    });
+
     // Before the load event ScrollTrigger measures everything itself, so only
     // changes that happen after load need a re-measure.
     var loaded = document.readyState === 'complete';

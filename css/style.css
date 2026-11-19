@@ -1468,12 +1468,16 @@ a.cline:hover .cline__ico{transform:rotate(45deg);background:var(--white);color:
    unchanged: these rules only apply once the script adds .is-live, so with no
    JS or with reduced motion the wordmark is exactly the static original.
    All values are scrubbed to the scroll position:
-   --rise / --fade   rise into view → hold → sink down and fade out
+   --rise / --fade   rise into view → hold → sink down and fade out. Set on
+                     the whole block, so the wordmark and its top line move
+                     and fade together as one unit (.foot clips the overflow)
    --sweep           a red glow band that passes across the letters
    --glow / --glow-a a soft red halo while the band passes                 */
-.foot__mark.is-live::before{
-  translate:0 calc(4% + var(--rise, 0%));
+.foot__mark.is-live{
+  translate:0 var(--rise, 0%);
   opacity:var(--fade, 1);
+}
+.foot__mark.is-live::before{
   background:
     linear-gradient(105deg, var(--red-600-0) calc(var(--sweep, -40%) - 18%), var(--red-600) var(--sweep, -40%), var(--red-600-0) calc(var(--sweep, -40%) + 18%)),
     linear-gradient(180deg, var(--white) 0%, var(--white-24) 55%, transparent 95%);

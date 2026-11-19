@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.4 — Wordmark and its line move as one unit (November 2026)
+
+- **The thin line above the giant "VAISHNAV CIBU" now moves with it.** Before,
+  only the letters rose, sank and faded, while the line stayed put. Now the
+  whole block (line and letters together) rises into view, holds, and sinks
+  and fades out as one unit. The red sweep and halo still pass across the
+  letters. Style, distances and timing are the same as in 2.1.3. The footer
+  row above it (copyright, company, "Back to top") is unchanged.
+- **Fixed: resizing the window near the bottom of the page could leave the
+  scroll animations misplaced.** The page's CSS smooth scrolling made
+  ScrollTrigger measure every animation from the wrong place, so they played
+  at the wrong scroll positions or not at all until reload. Smooth scrolling
+  is now switched off for the instant of each measurement; anchor links still
+  scroll smoothly.
+
 ## 2.1.3 — Wordmark sequence: rise, hold, red sweep, sink (November 2026)
 
 - **Fixed: the giant "VAISHNAV CIBU" looked frozen while scrolling.** Its rise
